@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+      <h1>Create a new product</h1>
+
+      <form method="POST" action="/products" class="needs-validation" novalidate>
+          <div>
+            <label for ="title" class="form-label" ><b>Title :</b></label>
+           <input type="text" name="product[title]" class="form-control" placeholder="Enter the name of your product" />
+             <div class="valid-feedback">Looks Good!</div>
+           </div>
+
+           <div>
+            <label for ="description" class="form-label" ><b>Description :</b></label>
+           <textarea type="text" name="product[description]" class="form-control"  value ="Enter the description of your product" > </textarea>
+             <div class="invalid-feedback">This is required field</div>
+        </div>
+
+           <div>
+            <label for ="price" class="form-label" ><b>Title :</b></label>
+           <input type="number" name="product[price]" class="form-control" placeholder="Enter the price " />
+           <div class="invalid-feedback">This is required field</div>
+        </div>
+
+           <div>
+            <label for ="sizes" class="form-label" ><b>Size :</b></label>
+           <input type="text" name="product[sizes]" class="form-control" placeholder="Enter the sizes " />
+           <div class="invalid-feedback">This is required field</div>
+           </div>
+      </form>
+
+        <form method="POST" action="/products">
+            <button class="btn btn-dark">Add</button>
+        </form>
+</body>
+</html>

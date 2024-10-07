@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Page</title>
+</head>
+<body>
+     <h1>Product details :</h1>
+            <h4>  <%= products.title %> </h4>
+          <ul>
+              
+            <li> <%= products.description %> </li>
+            <li> <%= products.price.toLocaleString("en-IN") %> </li>
+            <li> <%= products.sizes %> </li>
+           
+          </ul>
+       
+          <form method="PUT" action="/products/<%= products._id %>?_method=PUT"> 
+            <a href="/products/<%= products._id %>/edit" >Edit </a>
+
+          </form>
+
+         <form method="delete" action="/products/<%= products._id %>?_method=DELETE">
+            <button>Delete</button>
+         </form>
+      
+</body>
+</html>
