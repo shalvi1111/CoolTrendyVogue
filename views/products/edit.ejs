@@ -1,37 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+ <% layout("/layouts/boilerplate") %>
 <body>
      <h2>Edit details of product</h2>
-     
+       <form method="POST" action="/products/<%= product._id %>?_method=PUT">
      <div>
         <label for ="title" class="form-label" ><b>Title :</b></label>
-       <input type="text" name="title" class="form-control" value="<%= product.title %>" />
+       <input type="text" name="product[title]" class="form-control" value="<%= product.title %>" />
        </div>
 
        <div>
         <label for ="description" class="form-label" ><b>Description :</b></label>
-       <textarea type="text" name="description" class="form-control"  > <%= product.description %></textarea>
+       <textarea type="text" name="product[description]" class="form-control"  > <%= product.description %></textarea>
        </div>
 
        <div>
-        <label for ="price" class="form-label" ><b>Title :</b></label>
-       <input type="number" name="price" class="form-control" value="<%= product.price.toLocaleString("en-IN") %>" />
+        <label for ="price" class="form-label" ><b>Price :</b></label>
+       <input type="number" name="product[price]" class="form-control" value ="<%= product.price.toLocaleString("en-IN") %>" />
        </div>
 
        <div>
         <label for ="sizes" class="form-label" ><b>Size :</b></label>
-       <input type="text" name="sizes" class="form-control" value="<%= product.sizes %>" />
+       <input type="text" name="product[sizes]" class="form-control" value="<%= product.sizes %>" />
        </div>
-  </form>
-       
-  <form method="get" action="/products/<%= product._id %>?_method=PUT">
-     <button>Submit</button>
-  </form>
+
+   
+ 
+     <button type="submit">Submit</button>
+   </form>
      
 </body>
 </html>

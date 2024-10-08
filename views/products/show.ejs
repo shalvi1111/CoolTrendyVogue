@@ -1,28 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show Page</title>
-</head>
-<body>
-     <h1>Product details :</h1>
-            <h4>  <%= products.title %> </h4>
+  <%- layout("/layouts/boilerplate") %>
+   
+            <p class="title">  <%= products.title.toUpperCase() %> </p>
+            <br><br>
+
+             <span class="price"><b>&#8377;<%= products.price.toLocaleString("en-IN") %> </b></span>
+            <span class="tax">inclusive of all taxes</span>
+            <div class="size">
+                <p>Select size</p>
+                <% for(let i=0;i<products.sizes ; i++){ %>
+                   <span><%= products.sizes[i] %></span>
+                    
+               <% } %>
+            </div>
           <ul>
               
             <li> <%= products.description %> </li>
-            <li> <%= products.price.toLocaleString("en-IN") %> </li>
+            <li>  &#8377; <%= products.price.toLocaleString("en-IN") %> </li>
             <li> <%= products.sizes %> </li>
            
           </ul>
        
-          <form method="PUT" action="/products/<%= products._id %>?_method=PUT"> 
+          <!-- <form method="get" action="/products/<%= products._id %>?_method=PUT">  -->
+            
             <a href="/products/<%= products._id %>/edit" >Edit </a>
 
-          </form>
+          <!-- </form> -->
 
-         <form method="delete" action="/products/<%= products._id %>?_method=DELETE">
-            <button>Delete</button>
+         <form method="POST" action="/products/<%= products._id %>?_method=DELETE">
+            <button >Delete</button>
          </form>
       
 </body>
