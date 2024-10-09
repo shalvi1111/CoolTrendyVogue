@@ -1,34 +1,37 @@
   <%- layout("/layouts/boilerplate") %>
-   
-            <p class="title">  <%= products.title.toUpperCase() %> </p>
+
+          <div class="catelog">
+              <div>
+             <p class="catelog-title" style="color: grey;"><%= products.title.toUpperCase() %></p>
+                <div class="catelog-image">
+                   <img src="<%= products.image.url %>" alt="ProductImage" />
+                </div>
+              </div>
+          </div>
+             <div class="details" >
+            <p class="title">  <%= products.title %> </p>
             <br><br>
 
              <span class="price"><b>&#8377;<%= products.price.toLocaleString("en-IN") %> </b></span>
             <span class="tax">inclusive of all taxes</span>
             <div class="size">
                 <p>Select size</p>
-                <% for(let i=0;i<products.sizes ; i++){ %>
-                   <span><%= products.sizes[i] %></span>
+
+                <% for(let i=0;i<products.sizes.length ; i++){ %>
+
+                   <span class="radio"><%= products.sizes[i] %></span>
                     
                <% } %>
             </div>
-          <ul>
-              
-            <li> <%= products.description %> </li>
-            <li>  &#8377; <%= products.price.toLocaleString("en-IN") %> </li>
-            <li> <%= products.sizes %> </li>
-           
-          </ul>
-       
-          <!-- <form method="get" action="/products/<%= products._id %>?_method=PUT">  -->
+          
             
             <a href="/products/<%= products._id %>/edit" >Edit </a>
 
-          <!-- </form> -->
 
          <form method="POST" action="/products/<%= products._id %>?_method=DELETE">
             <button >Delete</button>
          </form>
+         </div>
       
 </body>
 </html>
