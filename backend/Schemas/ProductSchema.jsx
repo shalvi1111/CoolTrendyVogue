@@ -20,7 +20,11 @@ const productSchema = Schema({
         required: true
        
     } ,
-    image:String,
+    image : {
+        url : String ,
+        filename : String 
+        // type:String
+      } ,
     qty:{
         type:Number
     }

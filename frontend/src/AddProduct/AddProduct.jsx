@@ -312,7 +312,7 @@ function AddProduct() {
 
           <div className="mb-3">
           <button className='btn btn-dark m-2 p-2' style={{width:"20%" }} type='submit' >
-            <Link to ="/denim" style={{textDecoration:"none" , color:"white"}} >Add to shopping bag</Link>
+            <Link to ="/showProduct" style={{textDecoration:"none" , color:"white"}} >Add to shopping bag</Link>
            {/* <button type='submit'>Submit</button> */}
              </button>
           </div>

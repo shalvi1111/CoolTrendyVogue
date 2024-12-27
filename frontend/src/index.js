@@ -33,8 +33,8 @@ import HomePageofAllProducts from './LandingPage/Home/HomePage';
 // import WideLeg from './LandingPage/Jeans/WideLeg';
 // import CoOrds from "./LandingPage/co-ords/Co-ords";
 import Footer from './Footer';
-// import SalerForm from './Authentication/LoginSaler';
-// import SignUpSaler from './Authentication/SignUpSaler';
+import SalerForm from './Authentication/LoginSaler';
+import SignUpSaler from './Authentication/SignUpSaler';
 import AddProduct from "./AddProduct/AddProduct";
 import EveryThing from './LandingPage/EveryThingDenim';
 import Cart from './LandingPage/Cart';
@@ -86,11 +86,11 @@ root.render(
      <Route path='/wideLeg' element={<WideLeg />} ></Route>
 
      Co-ords
-     <Route path='/co-ords' element={<CoOrds />} ></Route> 
+     <Route path='/co-ords' element={<CoOrds />} ></Route> */}
      
       Saler 
       <Route path='/loginSaler' element={<SalerForm />}></Route>
-      <Route path='/signupSaler' element={<SignUpSaler />} ></Route>*/}
+      <Route path='/signupSaler' element={<SignUpSaler />} ></Route>
 
       {/* Add Product */}
       <Route path='/addProduct' element={<AddProduct/>} ></Route>

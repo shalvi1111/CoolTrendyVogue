@@ -3,9 +3,7 @@ const express = require("express");
 
 const cors = require("cors");
 const mongoose = require("mongoose");
-const Passport = require("passport");
-const passPortLoaclStrategy = require("passport-local");
-const session = require('express-session');
+// const session = require('express-session');
 const UserModel = require("./models/UserModel.jsx");
 const multer = require("multer");
 
@@ -15,19 +13,17 @@ const app = express();
 const PORT= process.env.PORT ||   4000 ;
 const uri = process.env.MONGO_URL;
 
+const jwt = require("jsonwebtoken");
 
- const sessioOption = {
-    secret : "it's a secret",
-    resave:false,
-    saveUninitialized:true
 
- }
+ 
 
  const path = require("path");
 
- app.use("/uploads", express.static(path.join(__dirname, "uploads")));
- 
+ app.use("/uploads", express.static("uploads"));
 
+ 
+   
 
 
 
@@ -35,14 +31,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(session(sessioOption));
 
-app.use(Passport.initialize());
-app.use(Passport.session())
-Passport.use(new passPortLoaclStrategy(UserModel.authenticate()));
+const createSecretToken = (id) => {
+  return jwt.sign({ id }, process.env.TOKEN_KEY, {
+    expiresIn: 3 * 24 * 60 * 60,
+  });
+};
 
-Passport.serializeUser(UserModel.serializeUser());
-Passport.deserializeUser(UserModel.deserializeUser());
 
 
 
@@ -94,7 +89,8 @@ app.post("/addProduct", upload.single("image"), async (req, res) => {
       title: req.body.title,
       price: req.body.price,
       qty: req.body.qty,
-      image: req.file ?` ./uploads/${req.file.filename}` : null,
+      // image: req.file? req.file.filename : null
+      image: req.file ? `/uploads/${req.file.filename}` : null, 
     });
 
     const prod = await newProduct.save();
@@ -129,7 +125,62 @@ app.post("/addProduct", upload.single("image"), async (req, res) => {
   //   // const product = await ProductModel.findById({id});
   //   // res.json(product);
   //   console.log("koko");
-  //  })
+  //  })image: req.file ? req.file.filename : null,
+
+
+    // app.post("/signupSaler" , async (req, res, next) => {
+    //   try {
+    //     const { email, password, username, createdAt } = req.body;
+    //     const existingUser = await UserModel.findOne({ email });
+    //     if (existingUser) {
+    //       return res.json({ message: "User already exists" });
+    //     }
+    //     const user = await UserModel.create({ email, password, username, createdAt });
+    //     const token = createSecretToken(user._id);
+    //     res.cookie("token", token, {
+    //       withCredentials: true,
+    //       httpOnly: false,
+    //     });
+    //     res
+    //       .status(201)
+    //       .json({ message: "User signed in successfully", success: true, user });
+    //     next();
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // })
+    
+    app.post("/signupSaler", async (req, res) => {
+      try {
+        const { email, password, username, createdAt } = req.body;
+    
+        if (!email || !password || !username) {
+          return res.status(400).json({ message: "All fields are required", success: false });
+        }
+    
+        const existingUser = await UserModel.findOne({ email });
+        if (existingUser) {
+          return res.status(409).json({ message: "User already exists", success: false });
+        }
+    
+        const user = await UserModel.create({ email, password, username, createdAt });
+        const token = createSecretToken(user._id);
+    
+        res.cookie("token", token, {
+          withCredentials: true,
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+        });
+    
+        res.status(201).json({ message: "User signed up successfully", success: true, user });
+      } catch (error) {
+        console.error("Error during signup:", error);
+        res.status(500).json({ message: "Server error. Please try again later.", success: false });
+      }
+    });
+  
+    
 
 
 

@@ -41,7 +41,7 @@ function Navbar() {
       
       </form>
 
-      <div className="icons">
+      <div className="icons  "    >
       <i className="fa fa-user-o fs-4 m-2 p-2" aria-hidden="true" ></i>
       <i className="fa fa-heart-o fs-4  m-2 p-2" aria-hidden="true"></i>
       <i className="fa fa-shopping-bag fs-4  m-2 p-2" aria-hidden="true"></i>
