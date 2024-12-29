@@ -192,7 +192,7 @@
 
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // import { method } from "../../../backend/Schemas/UserSchema";
 
 function AddProduct() {
@@ -210,7 +210,7 @@ function AddProduct() {
 
 
     const handleFileChange = (event)=>{
-      let imageFile = event.target.value
+      let imageFile = event.target.url
       setImage(imageFile);
     }
 
@@ -221,21 +221,18 @@ function AddProduct() {
       formData.append("description", description);
       formData.append("price", price);
       formData.append("qty", qty);
-      formData.append("image", image);
+      // formData.append("image", image);
   
       axios
-        .post("http://localhost:4000/addProduct", formData ,{
-          headers: { "Content-Type": "application/json" },
-        })
-    
-        .then((res) => {
-          console.log(res.data, "Product Added");
-          setAddedProduct(res.data); // Store the newly added product in state
-        })
-        .catch((err) => {
-          console.error("Error adding product:", err);
-        });
-    }
+  .post("http://localhost:4000/addProduct", formData)
+  .then((res) => {
+    console.log(res.data, "Product Added");
+    setAddedProduct(res.data);
+  })
+  .catch((err) => {
+    console.error("Error adding product:", err);
+  });
+}
  
     
   
@@ -336,8 +333,8 @@ function AddProduct() {
 
           <div className="mb-3">
           <button className='btn btn-dark m-2 p-2' style={{width:"20%" }} type='submit' >
-            <Link to ="/showProduct" style={{textDecoration:"none" , color:"white"}} >Add to shopping bag</Link>
-           {/* <button type='submit'>Submit</button> */}
+            {/* <Link to ="/showProduct" style={{textDecoration:"none" , color:"white"}} >Add to shopping bag</Link> */}
+           <button type='submit'>Submit</button>
              </button>
           </div>
 
@@ -349,9 +346,11 @@ function AddProduct() {
               <p>Description: {addedProduct.description}</p>
               <p>Price: ₹{addedProduct.price}</p>
               <p>Quantity: {addedProduct.qty}</p>
+              {/* <p>Image : {addedProduct.image && <img src=""}</p> */}
               {addedProduct.image && (
                 <img
                   src={`http://localhost:4000${addedProduct.image}`}
+                  // src={addedProduct.image}
                   alt={addedProduct.title}
                   style={{ width: "100px", height: "100px", objectFit: "cover" }}
                 />
@@ -368,3 +367,12 @@ export default AddProduct;
 
 
 
+
+
+
+
+
+
+
+
+// 22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
