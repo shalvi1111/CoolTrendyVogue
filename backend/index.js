@@ -1,13 +1,15 @@
 require("dotenv").config();
-// const cloudinary = require("./utills/cloudinaryConfig.js")
+const cloudinary = require("./utills/cloudinaryConfig.js");
+const storage = require("./utills/cloudinaryConfig.js");
 // const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const express = require("express");
 
 const cors = require("cors");
 const mongoose = require("mongoose");
-// const session = require('express-session');
+
 const UserModel = require("./models/UserModel.jsx");
 const multer = require("multer");
+const upload = multer({storage })
 
 const ProductModel = require("./models/ProductModel.jsx");
 // const passport = require("passport");
@@ -22,7 +24,7 @@ const jwt = require("jsonwebtoken");
 
  const path = require("path");
 
- app.use("/uploads", express.static("uploads"));
+//  app.use("/uploads", express.static("uploads"));
 
  
    
@@ -32,6 +34,8 @@ const jwt = require("jsonwebtoken");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 
 const createSecretToken = (id) => {
@@ -48,7 +52,7 @@ const createSecretToken = (id) => {
 //     cb(null, Date.now() + path.extname(file.originalname)); // Add timestamp to file name
 //   },
 // });
-// const parser = multer({ storage });
+// const storage = multer({ storage });
 
 
 
@@ -84,7 +88,7 @@ const createSecretToken = (id) => {
   // });
 
   // Route to add a product
-app.post("/addProduct",  async (req, res) => {
+app.post("/addProduct" ,upload.single('image') , async (req, res) => {
   console.log(req.body);
   try {
     const newProduct = new ProductModel({
@@ -93,11 +97,14 @@ app.post("/addProduct",  async (req, res) => {
       price: req.body.price,
       qty: req.body.qty,
       image: req.body.image
+      // url:req.file.path,
+      // filename: req.file.filename
       // image: {
       //   url: req.file.path, // Cloudinary URL
       //   filename: req.file.filename, // Cloudinary's public ID
       // }
-      // image: req.file.path
+     
+  
     });
       
     const prod = await newProduct.save();
@@ -108,6 +115,12 @@ app.post("/addProduct",  async (req, res) => {
     res.status(500).json({ message: "Failed to add product" });
   }
 });
+
+// app.post('/profile', upload.single('avatar'), function (req, res, next) {
+//   // req.file is the `avatar` file
+//   // req.body will hold the text fields, if there were any
+//   console.log(req.file);
+// })
 
 
    app.get("/showProduct" , async(req,res)=>{

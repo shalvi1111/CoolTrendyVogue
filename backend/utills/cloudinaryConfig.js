@@ -1,4 +1,5 @@
 const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 // Configure Cloudinary with your credentials
 cloudinary.config({
@@ -9,15 +10,15 @@ cloudinary.config({
 
 module.exports = cloudinary;
 
-// const storage = new CloudinaryStorage({
-//   cloudinary: cloudinary,
-//   params: {
-//     folder: 'uploads',
-//    allowed_formats: ['jpeg', 'png', 'jpg'], // supports promises as well
-//     // public_id:  'first_cloudinary',
-//   },
-// });
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'CoolTrendyVogue_DEV',
+   allowed_formats: ['jpeg', 'png', 'jpg'], // supports promises as well
+    // public_id:  'first_cloudinary',
+  },
+});
  
 // const parser = multer({ storage: storage });
 
-// module.exports = parser;
+module.exports = storage;
