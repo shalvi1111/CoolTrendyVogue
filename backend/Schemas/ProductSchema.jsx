@@ -21,9 +21,9 @@ const productSchema = Schema({
        
     } ,
     image : {
-        url : String ,
-        filename : String 
-        // type:String
+       type:String,
+       default:"https://unsplash.com/photos/a-woman-looking-at-clothes-hanging-on-a-rack-KLMtRhAs1TA",
+       set :(v)=> v==="" ? "https://unsplash.com/photos/a-woman-looking-at-clothes-hanging-on-a-rack-KLMtRhAs1TA" :v
       } ,
     qty:{
         type:Number

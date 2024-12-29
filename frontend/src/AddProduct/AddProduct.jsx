@@ -19,6 +19,8 @@
 //     const [price , setPrice]= useState('');
 //     const [title , setTitle]= useState('');
 //     const [description , setDescription]= useState('');
+//     const [addedProduct, setAddedProduct] = useState(null);
+//     // const [image , setImage]= useState('');
 //     console.log(image);
 //     console.log(title,price,description,qty,image ,"PIUDFBJ")
   
@@ -56,22 +58,26 @@
 //          formData.append("price", price);
 //          formData.append("qty", qty);
 //          formData.append("image", image);
+        
 //          // console.log(data);
-//          axios.post("http://localhost:4000/addProduct" ,formData)
-      
-//          .then(res =>{
-           
-//             console.log(res ,"result");
-           
-//          })
-//         .catch( (err)=>{
-//          console.log(err);
+//          axios
+//         .post("http://localhost:4000/addProduct", formData, {
+//           headers: { "Content-Type": "multipart/form-data" },
 //         })
-//      }
+//         .then((res) => {
+//           console.log(res.data, "Product Added");
+//           setAddedProduct(res.data); // Store the newly added product in state
+//         })
+//         .catch((err) => {
+//           console.error("Error adding product:", err);
+//         });
+//     }
+         
+     
 
 //     return ( 
 //       <div className="container p-5 m-5 text-center row" >
-//       <form onSubmit={handleSubmit} encType="multipart/form-data" method='POST'   >
+//       <form onSubmit={handleSubmit} encType="multipart/form-data"    >
       
 //           <div className="col-10 offset-2">
 //           <h1 className='fs-4 '><b><i>Unleash your creativity—add a product that will turn heads and set trends!</i></b></h1>
@@ -104,8 +110,8 @@
 //              <div className="image mb-4 mt-5 col-8 ">
 //             <div className="d-inline-flex ">
 //                <label htmlFor="image"  className="form-label fs-5"><b>Image:</b></label> &nbsp;&nbsp;
-//                <input type='file' placeholder='Enter the link of the product' name='image'   
-//                onChange={(e)=> setImage(e.target.files[0])}  className='form-control ms-5 w-100'/>
+//                <input type='text' placeholder='Enter the link of the product' name='image'   
+//                onChange={(e)=> setImage(e.target.value)}  className='form-control ms-5 w-100'/>
 //             </div>
 //             </div> 
 
@@ -138,7 +144,7 @@
 
 //             <div className="mb-3">
 //             <button className='btn btn-dark m-2 p-2' style={{width:"20%" }} type='submit' >
-//              <Link to ="/denim" style={{textDecoration:"none" , color:"white"}} >Add to shopping bag</Link>
+//              <Link to ="/showProduct" style={{textDecoration:"none" , color:"white"}} >Add to shopping bag</Link>
 //              {/* <button type='submit'>Submit</button> */}
 //             </button>
 
@@ -187,40 +193,56 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+// import { method } from "../../../backend/Schemas/UserSchema";
 
 function AddProduct() {
-  const [image, setImage] = useState("");
+  // const [image, setImage] = useState("");
   const [qty, setQty] = useState("");
   const [price, setPrice] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [image ,setImage] = useState("");
   const [addedProduct, setAddedProduct] = useState(null); // To store the added product
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("price", price);
-    formData.append("qty", qty);
-    formData.append("image", image);
+ 
 
-    axios
-      .post("http://localhost:4000/addProduct", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((res) => {
-        console.log(res.data, "Product Added");
-        setAddedProduct(res.data); // Store the newly added product in state
-      })
-      .catch((err) => {
-        console.error("Error adding product:", err);
-      });
-  };
+
+
+
+    const handleFileChange = (event)=>{
+      let imageFile = event.target.value
+      setImage(imageFile);
+    }
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("qty", qty);
+      formData.append("image", image);
+  
+      axios
+        .post("http://localhost:4000/addProduct", formData ,{
+          headers: { "Content-Type": "application/json" },
+        })
+    
+        .then((res) => {
+          console.log(res.data, "Product Added");
+          setAddedProduct(res.data); // Store the newly added product in state
+        })
+        .catch((err) => {
+          console.error("Error adding product:", err);
+        });
+    }
+ 
+    
+  
 
   return (
     <div className="container p-5 m-5 text-center row">
-      <form onSubmit={handleSubmit} encType="multipart/form-data" method="POST">
+      <form onSubmit={handleSubmit}  >
         <div className="col-10 offset-2">
           <h1 className="fs-4">
             <b>
@@ -268,9 +290,11 @@ function AddProduct() {
               </label>
               &nbsp;&nbsp;
               <input
-                type="file"
+                type="text"
                 name="image"
-                onChange={(e) => setImage(e.target.files[0])}
+               
+                onChange={handleFileChange}   
+                // {...preview && <img alt="pic" src={preview} />} 
                 className="form-control ms-5 w-100"
               />
             </div>

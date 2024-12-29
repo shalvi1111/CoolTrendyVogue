@@ -251,8 +251,9 @@ const ShowProducts = () => {
         >
           {product.image && (
             <img
-              src={`http://localhost:4000${product.image}`}
-              alt={product.image}
+              // src={`http://localhost:4000${product.image}`}
+              src={product.image}
+              alt={product.title}
               style={{ width: "100%", height: "150px", objectFit: "cover", borderRadius: "8px" }}
             />
           )}

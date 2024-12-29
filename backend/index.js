@@ -1,4 +1,6 @@
 require("dotenv").config();
+// const cloudinary = require("./utills/cloudinaryConfig.js")
+// const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const express = require("express");
 
 const cors = require("cors");
@@ -38,22 +40,22 @@ const createSecretToken = (id) => {
   });
 };
 
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads/"); // Upload files to 'uploads/' directory
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + path.extname(file.originalname)); // Add timestamp to file name
+//   },
+// });
+// const parser = multer({ storage });
 
 
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads")
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now()+"__"+ file.originalname);
-  }
-})
 
-const upload = multer({ storage ,
-  limits: { fileSize: 1000 * 1024 * 1024 }, 
-})
-
+// app.post('/upload', parser.single('image'), function (req, res) {
+//   res.json(req.file);
+// });
 
   app.get("/" , async(req,res)=>{
     res.send("Root path");
@@ -82,17 +84,22 @@ const upload = multer({ storage ,
   // });
 
   // Route to add a product
-app.post("/addProduct", upload.single("image"), async (req, res) => {
+app.post("/addProduct",  async (req, res) => {
+  console.log(req.body);
   try {
     const newProduct = new ProductModel({
       description: req.body.description,
       title: req.body.title,
       price: req.body.price,
       qty: req.body.qty,
-      // image: req.file? req.file.filename : null
-      image: req.file ? `/uploads/${req.file.filename}` : null, 
+      image: req.body.image
+      // image: {
+      //   url: req.file.path, // Cloudinary URL
+      //   filename: req.file.filename, // Cloudinary's public ID
+      // }
+      // image: req.file.path
     });
-
+      
     const prod = await newProduct.save();
     console.log(prod);
     res.status(201).json(prod);
