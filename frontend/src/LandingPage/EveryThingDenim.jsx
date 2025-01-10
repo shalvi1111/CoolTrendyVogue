@@ -1,23 +1,27 @@
 import axios from 'axios';
 import React ,{useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useParams} from 'react-router-dom';
 // import ShowProducts from '../ShowProducts';
 // import { useParams } from 'react-router-dom';
 
 
 
-const EveryThing =() =>{
+const EveryThing =({id}) =>{
 
-   
-         const [products, setProducts] = useState([]);
+        //  const  {id}  = useParams();  
+        //  console.log(id);
+         const [products, setProducts] = useState(null);
          const [loading, setLoading] = useState(true);
        
          // Fetch data from the backend
          useEffect(() => {
-           const fetchProducts = async () => {
+           const   fetchProducts =  async() =>{
+            
+           
              try {
-               const response = await  axios.get("http://localhost:4000/showProduct"); // Replace with your server IP if needed
-               setProducts(response.data);
+              const response = await axios.get(`http://localhost:4000/productDetail/${id}`);; // Replace with your server IP if needed
+               console.log(response.message); 
+              setProducts(response.data);
                setLoading(false);
              } catch (error) {
                console.error("Error fetching products:", error);
@@ -26,34 +30,35 @@ const EveryThing =() =>{
            };
        
            fetchProducts();
-         }, []);
+         }, [id]);
      
-         
+         if (loading) return <div>Loading...</div>;
+         if (!products) return <div>Product not found!</div>;
 
     
     return ( 
         <>
          <div className="container">
-            {products.map((product)=>(
+            {/* {products.map((product)=>( */}
 
           
-             <div className="row" key={product._id}>
+             <div className="row" >
 
                 <div className="col-7">
                 <img src=' ../font-awesome/images/Denim/DenimmJeans.webp' alt='logo' style={{width:"80%"  , height:"80%"}} className='m-2 p-2' />
                 <div className="desription m-1 p-2">
-                  <h1 className='fs-4 text-muted '>Desription</h1>
+                  <h1 className='fs-4 text-muted '>Description</h1>
                     <p className='text-muted p-2 m-2' style={{width:"100%"}}> 
-                        {product.description}
+                        {products.description}
                     </p>
                 </div>
                 </div>
                 
 
-                <div className="col-5">
-                    <h1 className='mt-4 mb-5 pt-5 fs-4 text-muted'>{product.title}   </h1>
+                <div className="col-5" key={products._id}>
+                    <h1 className='mt-4 mb-5 pt-5 fs-4 text-muted'>{products.title}   </h1>
 
-                    <p ><b className='fs-2'>&#8377;{product.price} &nbsp; </b>
+                    <p ><b className='fs-2'>&#8377;{products.price} &nbsp; </b>
                         <span style={{color:"green" , fontWeight:"600"}}>inclusive of all taxes</span> </p>
 
                         <div className="size mt-5 border-bottom">
@@ -111,7 +116,7 @@ const EveryThing =() =>{
 
                     
              </div>
-                ))} 
+                )
          
             </div>
      

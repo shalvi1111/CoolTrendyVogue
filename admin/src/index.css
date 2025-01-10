@@ -1,0 +1,6 @@
+/* SideBar */
+.row .col-12:hover {
+    transform: scale(1.05); /* Slightly enlarge the element on hover */
+    background-color: #f0f0f0; /* Light gray background on hover */
+    cursor: pointer; /* Pointer cursor to indicate clickability */
+  }

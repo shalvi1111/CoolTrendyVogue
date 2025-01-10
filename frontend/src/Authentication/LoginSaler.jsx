@@ -1,42 +1,111 @@
-import React from 'react';
-function SalerForm() {
-    return ( 
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
+const SalerFormLogin = () => {
+  const navigate = useNavigate();
+  const [inputValue, setInputValue] = useState({
+    email: "",
+    password: "",
+  });
+  const { email, password } = inputValue;
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
+
+  const handleError = (err) =>
+    toast.error(err, {
+      position: "bottom-left",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "bottom-left",
+    });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    window.localStorage.setItem("isLoggedIn" , true);
+    try {
+      const { data } = await axios.post(
+        "http://localhost:4000/userLogin",
+        {
+          ...inputValue,
+        },
+        { withCredentials: true }
+      );
+      console.log(data);
+      const { success, message } = data;
+      if (success) {
+        handleSuccess(message);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else {
+        handleError(message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setInputValue({
+      ...inputValue,
+      email: "",
+      password: "",
+    });
+  };
+
+  return (
+    <div className="form_container m-5 p-5">
+      <form onSubmit={handleSubmit}>
+      <h2 className="fs-4 text-center">Login Account</h2>
+      <div className="row ">
+      <div className="col-6">
+      <img
+                src="../font-awesome/images/BrandLogo.png"
+                alt="Signup"
+                style={{ width: "80%" }}
+              />
+      </div>
+      
+          <div className="col-4 offset-2">
+            <div className="row">
+        <div className="col-7" >
+          <label htmlFor="email" class="form-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control" 
+            value={email}
+            placeholder="Enter your email"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="col-7 mb-5">
+          <label htmlFor="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control" 
+            name="password"
+            value={password}
+            placeholder="Enter your password"
+            onChange={handleOnChange}
+          />
+        </div>
+        <button type="submit" className="btn btn-dark">Log in</button>&nbsp; &nbsp;
+        <span>
+          Already have an account? &nbsp;<Link to={"/signupSaler"}>Signup</Link>
+        </span>
+        </div>
+        </div>
      
-       <>
-         <div className="container m-2 p-2 text-center">
-            <div className="row m-2 ">
-                <div className="col-7 " >
-                <img src=' ../font-awesome/images/BrandLogo.png' alt='Signup' style={{width:"80%"}}/>
-                </div>
-                <div className="col-5 mt-5">
-                    <h1 className='fs-2 mb-5'><b>Log in</b></h1>
-                  
-                    <label forname= "email" className='mt-4 pt-2 ml-5'><b>Email : &nbsp; </b></label>
-                    <input type='text' name='email' placeholder='Enter yout email ' style={{width:"70%"}} />
-                    <br></br>
-
-
-                    
-                    <label forname= "password" className='mt-4 pt-2 ml-5'><b>Password : &nbsp; </b></label>
-                    <input type='password' name='password' placeholder='Password ' style={{width:"70%"}} />
-                       <br></br> <br></br>
-                       
-                    <a href='#' style={{textDecoration:"none"}}>Forget Password ?</a>
-
-
-                    <form>
-
-                      <button className='btn btn-dark mt-5 m-2' style={{width:"100px"}} >Sign in</button>
-                    </form>
-                   
-                   </div>
-               
-            </div>
-          
-         </div>
-        </>
-     );
-}
-
-export default SalerForm;
+      <ToastContainer />
+      </div>
+      </form>
+    </div>
+  );
+};
+export default SalerFormLogin;

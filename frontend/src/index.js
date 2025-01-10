@@ -33,22 +33,28 @@ import HomePageofAllProducts from './LandingPage/Home/HomePage';
 // import WideLeg from './LandingPage/Jeans/WideLeg';
 // import CoOrds from "./LandingPage/co-ords/Co-ords";
 import Footer from './Footer';
-import SalerForm from './Authentication/LoginSaler';
+import SalerFormLogin from './Authentication/LoginSaler';
 import SignUpSaler from './Authentication/SignUpSaler';
-import AddProduct from "./AddProduct/AddProduct";
+import LogOutSaler from './Authentication/LogOutSaler';
+// import AddProduct from "./AddProduct/AddProduct";
 import EveryThing from './LandingPage/EveryThingDenim';
 import Cart from './LandingPage/Cart';
 import ShowProducts from './ShowProducts';
+import Edit_Product from './Edit';
+import Hero from './LandingPage/Hero';
+import BestSeller from './BestSeller';
+// import MainHome from './LandingPage/Home/MainHome';
 // import ShowProduc from './LandingPage/ShowProducts';
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// const login = window.localStorage.getItem("isLoggedIn");
 root.render(
+   
    <BrowserRouter>
    <Navbar />
-    <Routes>
-
+   <Routes>
       <Route path='/' element={<HomePageofAllProducts />}></Route>
 {/*      
        All Products Folder 
@@ -88,15 +94,20 @@ root.render(
      Co-ords
      <Route path='/co-ords' element={<CoOrds />} ></Route> */}
      
-      Saler 
-      <Route path='/loginSaler' element={<SalerForm />}></Route>
+      {/* Saler  */}
+
+      <Route path='/loginSaler' element={ <SalerFormLogin />}></Route>
       <Route path='/signupSaler' element={<SignUpSaler />} ></Route>
+      <Route path='/logoutSaler'element={<LogOutSaler/>}></Route>
 
       {/* Add Product */}
-      <Route path='/addProduct' element={<AddProduct/>} ></Route>
-      <Route path='/denim' element={<EveryThing/>}></Route>
+      <Route path='/home' element={<Hero />}></Route>
+      {/* <Route path='/addProduct' element={<AddProduct/>} ></Route> */}
+      <Route path='/productDetail/:id' element={<EveryThing/>}></Route>
        <Route path='/cart' element={<Cart/>}></Route>
-      <Route path='/showProduct' element={<ShowProducts />}></Route>
+      <Route path='/listProduct' element={<ShowProducts />}></Route>
+      <Route path='/editProduct' element={<Edit_Product />}></Route>
+      <Route path="/bestSeller" element={<BestSeller />}></Route>
       
     
       

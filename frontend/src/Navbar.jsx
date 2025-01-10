@@ -31,21 +31,29 @@ function Navbar() {
     <Link className="navbar-brand" to="#">
     <h4 className='fs-1 ' style={{fontWeight:"bolder"}}> <i>Cool Trendy Vogue   </i>     </h4>
       </Link>
+    
  
     
-      <form className="d-flex" role="search">
-        <input className="form-control me-2 " type="search" placeholder="SEARCH " aria-label="Search" style={{width:"600px", height:"2rem"}}  />
-        <button className="btn btn-dark fs-6 text-center   " type="submit" style={{width:"100px" ,height:"2rem"}}>SEARCH
-        </button>
-      
-      
-      </form>
-
-      <div className="icons  "    >
-      <i className="fa fa-user-o fs-4 m-2 p-2" aria-hidden="true" ></i>
-      <i className="fa fa-heart-o fs-4  m-2 p-2" aria-hidden="true"></i>
-      <i className="fa fa-shopping-bag fs-4  m-2 p-2" aria-hidden="true"></i>
+      <div className="search text-center">
+        <Link to="/home" style={{textDecoration:"none", color:"black"}}> <strong className='fs-2 m-3'><i class="fa fa-home" aria-hidden="true"></i></strong> </Link>
+        <Link to="/collectionns" style={{textDecoration:"none", color:"black"}}> <strong className='fs-2 m-3'>Collections</strong> </Link>
+        <Link to="/about" style={{textDecoration:"none", color:"black"}}>  <strong className='fs-2 m-3'><i class="fa fa-inbox" aria-hidden="true"></i></strong>  </Link>
+        <Link to="/contact" style={{textDecoration:"none", color:"black"}}>  <strong className='fs-2 m-3'><i class="fa fa-envelope" aria-hidden="true"></i></strong> </Link>
+        <Link to="/cart" style={{textDecoration:"none", color:"black"}}> <strong className='fs-2 m-3'> <i class="fa fa-shopping-cart" aria-hidden="true"></i></strong> </Link>
       </div>
+       
+      
+      <span className='dropdown'>
+      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{backgroundColor:"transparent" }}>
+  <i className="fa fa-user-o fs-4 m-2 p-2" aria-hidden="true" ></i>
+  </button>
+  <ul class="dropdown-menu" >
+  <li><Link to= "/signupSaler"style={{textDecoration:"none" ,color:"black"}}>Register</Link></li>
+  <li><Link to="/loginSaler" style={{textDecoration:"none" ,color:"black"}}>Login</Link></li>
+  <li><Link to="/logoutSaler" style={{textDecoration:"none" ,color:"black"}}>logout</Link></li>
+  </ul>
+  </span>
+          
     </div>
   
 </nav>
