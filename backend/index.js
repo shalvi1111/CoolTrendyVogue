@@ -13,7 +13,7 @@ const UserModel = require("./models/UserModel.jsx");
 // const multer= require("multer");
 
 const ProductModel = require("./models/ProductModel.jsx");
-
+const sizeModel = require("./models/SizeModel.jsx")
 const upload = require("./middleware/multer.js")
 const AdminAuthentication = require("./middleware/AdminAuthentication.js");
 // const cors = require("cors");
@@ -35,10 +35,12 @@ const jwt = require("jsonwebtoken");
   
  const path = require("path");
 const productSchema = require("./Schemas/ProductSchema.jsx");
-const { nextTick } = require("process");
+const { nextTick, title } = require("process");
 const passport = require("passport");
 const { PassThrough } = require("stream");
-
+const OrderModel = require("./models/OderModel.jsx");
+const CartModel = require("./models/CartModel.jsx");
+const { default: Cart } = require("../frontend/src/LandingPage/Cart.jsx");
 
 
  
@@ -88,16 +90,16 @@ const createSecretToken = (id) => {
 
 
   // Route to add a product
-app.post("/addProduct" ,AdminAuthentication,upload.fields([{name:"imageF",maxCount:1},{name:"imageS",maxCount:1}, {name:"imageT",maxCount:1} , {name:"imageFourth",maxCount:1}]) , async (req, res) => {
+app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS",maxCount:1}, {name:"imageT",maxCount:1} , {name:"imageFourth",maxCount:1}]) , async (req, res) => {
   //  app.post("/addProduct", async(req,res)=>{
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const {title ,
       category ,
       description,
       price ,
-      subCategory,
-      sizes , 
+      // subCategory,
+      // sizes , 
       bestSeller,
       qty
     }  = req.body;
@@ -114,6 +116,8 @@ app.post("/addProduct" ,AdminAuthentication,upload.fields([{name:"imageF",maxCou
         return result1.secure_url
       })
      )
+
+    
       // const ProductData = {
       //   title ,
       // category ,
@@ -132,8 +136,10 @@ app.post("/addProduct" ,AdminAuthentication,upload.fields([{name:"imageF",maxCou
       category ,
       description,
       price :Number(price),
-      subCategory,
-      sizes :JSON.parse(sizes), 
+      // subCategory,
+      // sizes :JSON.parse(sizes), 
+      // sizes: typeof sizes === "String" ? JSON.parse(sizes) : sizes, 
+
       bestSeller : bestSeller === "true"? true:false,
       image : imageurl,
       qty: Number(qty),
@@ -171,8 +177,31 @@ app.post("/addProduct" ,AdminAuthentication,upload.fields([{name:"imageF",maxCou
         res.json({success:false , message:err.message})
       }
     // console.log(besteller)
-  })
+  }) ;
 
+  app.post("/size" , async(req,res)=>{
+    try{
+      const {size} = req.body;
+      const newSize =  new sizeModel({size});
+       const saveSize = await newSize.save();
+      res.json({success:true,message:saveSize})
+    }
+    catch(err){
+      res.json({success:false,message:err.message})
+    }
+  })
+   
+   app.get("/size" , async(req,res)=>{
+    try{
+    //  const {id} = req.params;
+     const getSizes = await sizeModel.find({});
+     res.json({success:true, message:getSizes})
+    } 
+    catch(err){
+      res.json({success:false, message:err.message})
+    }
+
+   })
 
 
   // Remove Product
@@ -191,7 +220,8 @@ app.post("/addProduct" ,AdminAuthentication,upload.fields([{name:"imageF",maxCou
 
   app.get("/productDetail/:id" , async(req,res)=>{
     try{
-      const {id} = req.body ;
+      const {id} = req.params ;
+      // console.log(id);
       const detailProd = await ProductModel.findById(id);
       res.json({success:true ,message:detailProd })
     }
@@ -201,6 +231,118 @@ app.post("/addProduct" ,AdminAuthentication,upload.fields([{name:"imageF",maxCou
   })
 
 
+    // Placing order by Cash on delivery
+    app.post("/placeorder/COD" , async(req,res)=>{
+      try{
+        const {UserId , itmes , price , address} = req.body;
+        const newOder = new OrderModel({
+          UserId ,
+           itmes ,
+            price ,
+             address,
+             paymentMode:"COD",
+             payment:false,
+             date:Date.now()
+        })
+       const order= await newOder.save();
+        res.json({status:true , message:order})
+      }
+      catch(err){
+        res.json({success:false,message:err})
+      }
+
+    })
+
+    // PLaceing order by razorpay 
+     app.post("/placeorder/razorpay" , async(req,res)=>{
+
+     })
+
+    //  All order for admin panel 
+
+
+
+    // Shopping data for frontend
+
+
+    
+
+  // Product's added in cart
+  app.post("/cart/:id" , async(req,res)=>{
+
+    try{
+       const {image , title, price , qty , sizes } = req.body;
+      const newProd = new CartModel({
+      title ,
+      price ,
+      qty,
+      image ,
+      sizes, 
+     
+    })
+    await newProd.save();
+    res.json({success:true , message:newProd})
+    }
+    catch(err){
+      res.json({success:false , message:err})
+    }
+  })
+
+  // Product's viewing in cart
+  app.get("/cart" , async(req,res)=>{
+    try{
+      
+    
+    const cartProduct = await CartModel.find({});
+    res.json({success:true, message:cartProduct})
+    }
+    catch(err){
+      res.json({success:false, message:err.message});
+    }
+  }) ;
+
+  app.get("/cart/count" , async(req,res)=>{
+    try{
+      const countdata = await CartModel.countDocuments();
+      res.json({success:true , message:countdata})
+    }
+    catch(err){
+      res.json({success:false , message:err.message})
+    }
+  })
+
+
+  //  Cart total price
+
+  app.get("/cart/tp" , async(req,res)=>{
+     try{
+    const data = await CartModel.find({});
+    const totalPrice = data.reduce( (val , prod)=> val+prod.price*prod.qty ,0)
+    res.json({success:true , message:totalPrice})
+     }
+     catch(err){
+      res.json({success:false, message:err.message})
+     }
+    // console.log(totalPrice)
+  })
+
+  // Remove single cart
+
+  app.delete("/cart/delete/:id" ,async(req,res)=>{
+    try{
+    const id = req.params.id;
+    console.log(id)
+    const deleteProd = await CartModel.findByIdAndDelete(id);
+    if (!deleteProd) {
+      return res.status(404).json({ success: false, message: "Product not found" });
+  }
+    res.json({success:true, message:deleteProd})
+    }
+    catch(err){
+      res.json({success:false, message:err.message})
+    }
+
+  })
 
 
 
@@ -284,7 +426,7 @@ app.post("/addProduct" ,AdminAuthentication,upload.fields([{name:"imageF",maxCou
        
       // Admin Login For Admin Folder
 
-      app.post("/adminLogin",AdminAuthentication , async(req,res)=>{
+      app.post("/adminLogin" , async(req,res)=>{
         try{
            const {email ,password} = req.body;
            if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD){

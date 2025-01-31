@@ -36,13 +36,14 @@ import Footer from './Footer';
 import SalerFormLogin from './Authentication/LoginSaler';
 import SignUpSaler from './Authentication/SignUpSaler';
 import LogOutSaler from './Authentication/LogOutSaler';
-// import AddProduct from "./AddProduct/AddProduct";
+import AddProduct from "./AddProduct/AddProduct";
 import EveryThing from './LandingPage/EveryThingDenim';
 import Cart from './LandingPage/Cart';
 import ShowProducts from './ShowProducts';
 import Edit_Product from './Edit';
 import Hero from './LandingPage/Hero';
 import BestSeller from './BestSeller';
+import Order from './LandingPage/Order';
 // import MainHome from './LandingPage/Home/MainHome';
 // import ShowProduc from './LandingPage/ShowProducts';
 
@@ -96,18 +97,21 @@ root.render(
      
       {/* Saler  */}
 
-      <Route path='/loginSaler' element={ <SalerFormLogin />}></Route>
-      <Route path='/signupSaler' element={<SignUpSaler />} ></Route>
+      <Route path='/userLogin' element={ <SalerFormLogin />}></Route>
+      <Route path='/signupUser' element={<SignUpSaler />} ></Route>
       <Route path='/logoutSaler'element={<LogOutSaler/>}></Route>
 
       {/* Add Product */}
       <Route path='/home' element={<Hero />}></Route>
-      {/* <Route path='/addProduct' element={<AddProduct/>} ></Route> */}
+      <Route path='/addProduct' element={<AddProduct/>} ></Route>
       <Route path='/productDetail/:id' element={<EveryThing/>}></Route>
+       {/* <Route path='/cart/:id' element={<Cart/>}></Route> */}
        <Route path='/cart' element={<Cart/>}></Route>
       <Route path='/listProduct' element={<ShowProducts />}></Route>
       <Route path='/editProduct' element={<Edit_Product />}></Route>
       <Route path="/bestSeller" element={<BestSeller />}></Route>
+      <Route path='/buy' element={<Order/>}></Route>
+      {/* <Route path='/cart/delete' element={<Cart/>}></Route> */}
       
     
       

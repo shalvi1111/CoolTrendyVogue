@@ -119,6 +119,7 @@ function BestSeller() {
   useEffect(() => {
     const bestProd = async () => {
       try {
+        
         const res_Prod = await axios.get("http://localhost:4000/bestSeller");
         if (res_Prod.data.success) {
           setProducts(res_Prod.data); // Adjust based on backend response

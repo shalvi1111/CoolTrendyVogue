@@ -12,7 +12,7 @@ const ListProducts = () => {
       try {
         const response = await axios.get("http://localhost:4000/listProduct");
         if (response.data.success) {
-          setProducts(response.data.message.slice(0,21));
+          setProducts(response.data.message);
         } else {
           setError("Failed to fetch products: " + response.data.message);
         }
@@ -54,7 +54,7 @@ const ListProducts = () => {
               className="object-fit"
               src={product.image[0]} // Assuming the first image is displayed
               alt={product.title}
-              style={{ width: "100%", height: "auto", objectFit: "cover", borderRadius: "8px"    }}
+              style={{ width: "100%", height: "400px", objectFit: "contain", borderRadius: "8px"    }}
             />
           ) : (
             <div

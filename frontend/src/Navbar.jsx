@@ -1,8 +1,27 @@
+import axios from 'axios';
 import React from 'react';
-import {Link} from 'react-router-dom' ;
+import {Link, useNavigate} from 'react-router-dom' ;
+import { useState , useEffect } from 'react';
 
 
 function Navbar() {
+  const [count , setCount] = useState(0);
+  const navigate = useNavigate();
+   useEffect ( ()=>{
+       const countdata = async()=>{
+         try {
+          const result = await axios.get("http://localhost:4000/cart/count");
+          // console.log(result.data.message)
+             setCount(result.data.message)
+            }
+            catch(err){
+              console.log(err);
+    
+            }
+       }
+       countdata();
+   },[])
+   
     return ( 
         <>
         {/* <nav class="navbar bg-body-tertiary">
@@ -39,7 +58,16 @@ function Navbar() {
         <Link to="/collectionns" style={{textDecoration:"none", color:"black"}}> <strong className='fs-2 m-3'>Collections</strong> </Link>
         <Link to="/about" style={{textDecoration:"none", color:"black"}}>  <strong className='fs-2 m-3'><i class="fa fa-inbox" aria-hidden="true"></i></strong>  </Link>
         <Link to="/contact" style={{textDecoration:"none", color:"black"}}>  <strong className='fs-2 m-3'><i class="fa fa-envelope" aria-hidden="true"></i></strong> </Link>
-        <Link to="/cart" style={{textDecoration:"none", color:"black"}}> <strong className='fs-2 m-3'> <i class="fa fa-shopping-cart" aria-hidden="true"></i></strong> </Link>
+        {/* <Link to="/cart" style={{textDecoration:"none", color:"black"}}> <strong className='fs-2 m-3'> <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+</strong> </Link> */}
+<button type="button" class="btn  position-relative" onClick={()=>navigate("/cart")}>
+<i class="fa fa-shopping-cart fs-2" aria-hidden="true"></i>
+  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    {count}
+    <span class="visually-hidden">{count} </span>
+  </span>
+</button>
+
       </div>
        
       
@@ -60,5 +88,5 @@ function Navbar() {
 </>
      );
 }
-
+ 
 export default Navbar;
