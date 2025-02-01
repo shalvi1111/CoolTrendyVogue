@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 // import { backendURL } from "../App";
 
 
-const LoginAdmin = ({setResult}) => {
+const LoginAdmin = () => {
 
 
   
@@ -21,12 +21,12 @@ const LoginAdmin = ({setResult}) => {
       event.preventDefault();
       const response = await axios.post( "http://localhost:4000/adminLogin" , {email,password});
       console.log(response);
-      // if(response.data.success){
-      //   setResult(response.data.result)
-      // }
+      if(response.data.success){
+        setPassword(response.data.result)
+      }
      }
      catch(err){
-      console.log(err)
+      console.log(err.message)
      }
 
    }

@@ -76,9 +76,9 @@ function Navbar() {
   <i className="fa fa-user-o fs-4 m-2 p-2" aria-hidden="true" ></i>
   </button>
   <ul class="dropdown-menu" >
-  <li><Link to= "/signupSaler"style={{textDecoration:"none" ,color:"black"}}>Register</Link></li>
-  <li><Link to="/loginSaler" style={{textDecoration:"none" ,color:"black"}}>Login</Link></li>
-  <li><Link to="/logoutSaler" style={{textDecoration:"none" ,color:"black"}}>logout</Link></li>
+  <li><Link to= "/signupUser"style={{textDecoration:"none" ,color:"black"}}>Register</Link></li>
+  <li><Link to="/userLogin" style={{textDecoration:"none" ,color:"black"}}>Login</Link></li>
+  <li><Link to="/logoutuser" style={{textDecoration:"none" ,color:"black"}}>logout</Link></li>
   </ul>
   </span>
           

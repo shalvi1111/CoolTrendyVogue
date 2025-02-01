@@ -251,7 +251,7 @@ function SignUpSaler() {
                 Sign up
               </button>
               <span>
-                Already have an account? <Link to="/login">Login</Link>
+                Already have an account? <Link to="/userLogin">Login</Link>
               </span>
             </div>
           </div>

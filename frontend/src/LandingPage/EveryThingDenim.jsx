@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React ,{useState,useEffect } from 'react';
 import { Link , useParams} from 'react-router-dom';
-import Select from "react-select";
+// import Select from "react-select";
 // import { useNavigate } from "react-router-dom";
 
 // import ShowProducts from '../ShowProducts';
@@ -13,34 +13,10 @@ const EveryThing =() =>{
 
          const  {id}  = useParams();  
          
-         const sizeOption = [
-          {
-            value:"x-small" ,
-            label:"XS"
-          },
-          {
-            value:"small" ,
-            label:"S"
-          },
-          {
-            value:"med" ,
-            label:"M"
-          },
-          {
-            value:"large" ,
-            label:"L"
-          },
-          {
-            value:"x-large" ,
-            label:"XL"
-          },
-          {
-            value:"xx-large" ,
-            label:"XXL"
-          }
-         ]
+         
          const [products, setProducts] = useState(null);
          const [size , setSize] = useState(null);
+        //  const [qty,setQty] = useState();
 
        
         //  const [loading, setLoading] = useState(true);
@@ -52,6 +28,7 @@ const EveryThing =() =>{
            
              try {
               const response = await axios.get(`http://localhost:4000/productDetail/${id}`); 
+
               // // Replace with your server IP if needed
              
               //  console.log(response.data.message ,"Line no 23"); 
@@ -59,7 +36,7 @@ const EveryThing =() =>{
               //  setLoading(false);
              } catch (error) {
                console.error("Error fetching products:", error);
-               setProducts(error.message);
+               setProducts(null);
              }
            };
        
@@ -71,23 +48,35 @@ const EveryThing =() =>{
      
         //  if (loading) return <div>Loading...</div>;
 
-         const handleSize = (e)=>{
+         const hadleChangeSQ = (e )=>{
           console.log(e);
+        
+          
+           
               setSize(e);
+          
+              
          }
 
-        const handleSubmitSize = async(e)=>{
+
+
+        const hadleSubmitSQ = async(e)=>{
           e.preventDefault();
-          const sizeDat = {
-            size:size
+          // const ndata = new FormData();
+          // ndata.append("qty" , qty);
+          // ndata.append("size",size);
+          const sizeQtyData = {
+            // qty:qty,
+            size:size      
           } 
+          //  console.log(sizeQtyData,"8790")
           try{
-          const resultSize = await axios.post("http://localhost:4000/size" , sizeDat, {
+          const resultSize = await axios.post("http://localhost:4000/sizeqty" , sizeQtyData,{
                 headers: { "Content-Type": "application/json" }, // Ensure proper headers
               });
-          console.log(resultSize.data.message);
+          console.log(resultSize.data.message ,"105");
           if(resultSize.data.success){
-            alert("Size added successfully 85");
+            alert("Size added successfully ");
           }
           // setSize(resultSize.data.message);
           }
@@ -96,6 +85,10 @@ const EveryThing =() =>{
           }
          }
 
+
+        //  useEffect(() => {
+        //   console.log("Current qty:", qty);  // Log qty when it updates
+        // }, [qty]);
         const handleSubmitCart = async(event)=>{
             event.preventDefault() ;
 //  image , title, price , qty , sizes ,
@@ -104,7 +97,7 @@ const EveryThing =() =>{
               title: products.title,
               qty : products.qty ,
               price : products.price ,
-            // sizes : products.sizes
+              // sizes : products.sizes
             }
 
             try{
@@ -163,14 +156,14 @@ const EveryThing =() =>{
                     <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                       
                        <div class="btn-group me-2" role="group" aria-label="First group">
-                        <button onClick={()=> handleSize("XS")} class="btn btn-outline-secondary" >XS</button>
+                        <button onClick={()=> hadleChangeSQ("XS")} class="btn btn-outline-secondary" >XS</button>
 
-                        <button onClick={()=>handleSize("S")} class="btn btn-outline-secondary">S</button>
-                        <button onClick={()=>handleSize("M")} class="btn btn-outline-secondary">M</button>
-                        <button onClick={()=>handleSize("L")} class="btn btn-outline-secondary">L</button>
-                        <button onClick={()=>handleSize("XL")} class="btn btn-outline-secondary">XL</button>
-                        <button onClick={()=>handleSize("XXL")} class="btn btn-outline-secondary">XXL</button>
-
+                        <button onClick={()=>hadleChangeSQ("S" )} class="btn btn-outline-secondary">S</button>
+                        <button onClick={()=>hadleChangeSQ("M" )} class="btn btn-outline-secondary">M</button>
+                        <button onClick={()=>hadleChangeSQ("L" )} class="btn btn-outline-secondary">L</button>
+                        <button onClick={()=>hadleChangeSQ("XL" )} class="btn btn-outline-secondary">XL</button>
+                        <button onClick={()=>hadleChangeSQ("XXL" )} class="btn btn-outline-secondary">XXL</button>
+                       
                        {/* <Select defaultValue={size} options={sizeOption} placeholder="Select size" isMulti noOptionsMessage={()=>"No size found"}/> */}
                         {/* {Array.isArray(products.sizes)?products.sizes.map((size , idx)=>(
                            <button type="button" class="btn btn-outline-secondary" key={idx}>{size}</button>
@@ -179,7 +172,7 @@ const EveryThing =() =>{
               
                      </div>
 
-                      <form onSubmit={handleSubmitSize}>
+                      <form onSubmit={hadleSubmitSQ}>
                         <button className='btn btn-dark' type='submit'>Sumit size</button>
                      </form>
 

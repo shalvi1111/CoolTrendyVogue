@@ -19,7 +19,7 @@ const AdminAuthentication = require("./middleware/AdminAuthentication.js");
 // const cors = require("cors");
 // const mongoose = require("mongoose");
 
-
+const bcrypt = require('bcrypt');
 
   
 
@@ -48,7 +48,7 @@ const { default: Cart } = require("../frontend/src/LandingPage/Cart.jsx");
 
 
 
-app.use(cors());
+// app.use(cors());
 app.use(
   cors({
     origin: "http://localhost:3000", // Replace with your React app's URL
@@ -101,7 +101,7 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
       // subCategory,
       // sizes , 
       bestSeller,
-      qty
+      // qty
     }  = req.body;
 
     const imageF = req.files.imageF && req.files.imageF[0]
@@ -142,7 +142,7 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
 
       bestSeller : bestSeller === "true"? true:false,
       image : imageurl,
-      qty: Number(qty),
+      // qty: Number(qty),
       date : Date.now()
         }) ;
         await newPrdouct.save();
@@ -179,9 +179,23 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
     // console.log(besteller)
   }) ;
 
-  app.post("/size" , async(req,res)=>{
+   app.get("/getWomCategory" , async(req,res)=>{
     try{
-      const {size} = req.body;
+    // const {category} = req.params ;
+    // console.log(category)
+    
+     const findWomCategory = await ProductModel.find({category:"Women" });
+       
+     res.json({success:true , message:findWomCategory})
+    }
+    catch(err){
+      res.json({success:false , message:err.message})
+    }
+   })
+
+  app.post("/sizeqty" , async(req,res)=>{
+    try{
+      const {size } = req.body;
       const newSize =  new sizeModel({size});
        const saveSize = await newSize.save();
       res.json({success:true,message:saveSize})
@@ -191,7 +205,7 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
     }
   })
    
-   app.get("/size" , async(req,res)=>{
+   app.get("/sizeqty" , async(req,res)=>{
     try{
     //  const {id} = req.params;
      const getSizes = await sizeModel.find({});
@@ -301,6 +315,23 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
     }
   }) ;
 
+  app.delete("/cart/delete/:id" ,async(req,res)=>{
+    try{
+    const {id} = req.params;
+    // console.log(id)
+    // const {title} = req.body;
+    const deleteProd = await CartModel.findByIdAndDelete(id);
+    if (!deleteProd) {
+      return res.status(404).json({ success: false, message: "Product not found" });
+  }
+    res.json({success:true, message:deleteProd})
+    }
+    catch(err){
+      res.json({success:false, message:err.message})
+    }
+
+  })
+
   app.get("/cart/count" , async(req,res)=>{
     try{
       const countdata = await CartModel.countDocuments();
@@ -328,21 +359,7 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
 
   // Remove single cart
 
-  app.delete("/cart/delete/:id" ,async(req,res)=>{
-    try{
-    const id = req.params.id;
-    console.log(id)
-    const deleteProd = await CartModel.findByIdAndDelete(id);
-    if (!deleteProd) {
-      return res.status(404).json({ success: false, message: "Product not found" });
-  }
-    res.json({success:true, message:deleteProd})
-    }
-    catch(err){
-      res.json({success:false, message:err.message})
-    }
-
-  })
+  
 
 
 

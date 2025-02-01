@@ -8,7 +8,7 @@ function Siderbar() {
           <div className="sidebar" style={{width:"300px" , height:"100vh" ,border:"2px solid grey" , borderRadius:"5px"}}>
               <div className="row ">
                 <div className="col-12 me-5 text-center add" style={{border:"2px solid black" , width:"97%" , height:"50px"}} >
-                <Link to="/add" style={{textDecoration:"none" , color:"black"}}><span className='p-5'> <i className="fa-solid fa-plus fs-2"></i> Add items</span></Link>
+                <Link to="/addProduct" style={{textDecoration:"none" , color:"black"}}><span className='p-5'> <i className="fa-solid fa-plus fs-2"></i> Add items</span></Link>
                 </div>
            
                 <div className="col-12 mt-5 text-center list" style={{border:"2px solid black" , width:"97%",height:"50px"}}>

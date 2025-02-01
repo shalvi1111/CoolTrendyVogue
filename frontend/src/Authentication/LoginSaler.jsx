@@ -29,7 +29,9 @@ const SalerFormLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    window.localStorage.setItem("isLoggedIn" , true);
+
+     
+   
     try {
       const { data } = await axios.post(
         "http://localhost:4000/userLogin",
@@ -41,6 +43,7 @@ const SalerFormLogin = () => {
       console.log(data);
       const { success, message } = data;
       if (success) {
+        window.localStorage.setItem("isLoggedIn" , true);
         handleSuccess(message);
         setTimeout(() => {
           navigate("/");
@@ -50,7 +53,8 @@ const SalerFormLogin = () => {
       }
     } catch (error) {
       console.log(error);
-    }
+    
+  }
     setInputValue({
       ...inputValue,
       email: "",

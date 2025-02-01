@@ -23,13 +23,13 @@ root.render(
        <Siderbar />
         <Routes>
         <Route path='/login' element={<LoginAdmin />} />
-        <Route path='/add' element={<AddItems />} />
+        <Route path='/addProduct' element={<AddItems />} />
        <Route path='/list' element={<ListItems />} />
         <Route path='/orders' element={<OrderItem />} />
         
 
-    </Routes>
-     */}
+    </Routes> */}
+    
    
  <App />
     

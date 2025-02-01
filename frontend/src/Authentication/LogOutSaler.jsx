@@ -6,7 +6,7 @@ function LogOutSaler() {
        
         window.localStorage.removeItem("isLoggedIn")
         alert("LoggedOut")
-        navigate('/showProduct')
+        navigate('/')
     }
 
     return ( 

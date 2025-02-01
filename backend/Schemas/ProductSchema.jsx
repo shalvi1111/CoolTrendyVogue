@@ -22,7 +22,7 @@ const productSchema = Schema({
     } ,
     image : {
        type:Array,
-       required:true
+      //  required:true
     //    default:"https://unsplash.com/photos/a-woman-looking-at-clothes-hanging-on-a-rack-KLMtRhAs1TA",
     //    set :(v)=> v==="" ? "https://unsplash.com/photos/a-woman-looking-at-clothes-hanging-on-a-rack-KLMtRhAs1TA" :v
     //    url:String ,
@@ -37,8 +37,8 @@ const productSchema = Schema({
       //   required:true
       // },
       // sizes:{
-      //   type:String,
-      //   required:true
+      //   type:String
+      //   // required:true
       // },
       bestSeller:{
         type:Boolean
@@ -46,10 +46,10 @@ const productSchema = Schema({
       date:{
         type:Number,
         required:true
-      },
-    qty:{
-        type:Number
-    }
+      }
+    // qty:{
+    //     type:Number
+    // }
 
 }) ;
 

@@ -44,6 +44,8 @@ import Edit_Product from './Edit';
 import Hero from './LandingPage/Hero';
 import BestSeller from './BestSeller';
 import Order from './LandingPage/Order';
+import Delete from './LandingPage/Home/Delete';
+import Men from './LandingPage/Men';
 // import MainHome from './LandingPage/Home/MainHome';
 // import ShowProduc from './LandingPage/ShowProducts';
 
@@ -99,7 +101,7 @@ root.render(
 
       <Route path='/userLogin' element={ <SalerFormLogin />}></Route>
       <Route path='/signupUser' element={<SignUpSaler />} ></Route>
-      <Route path='/logoutSaler'element={<LogOutSaler/>}></Route>
+      <Route path='/logoutuser'element={<LogOutSaler/>}></Route>
 
       {/* Add Product */}
       <Route path='/home' element={<Hero />}></Route>
@@ -107,11 +109,13 @@ root.render(
       <Route path='/productDetail/:id' element={<EveryThing/>}></Route>
        {/* <Route path='/cart/:id' element={<Cart/>}></Route> */}
        <Route path='/cart' element={<Cart/>}></Route>
+       <Route path='/cart/delete' element={<Delete />}></Route>
       <Route path='/listProduct' element={<ShowProducts />}></Route>
       <Route path='/editProduct' element={<Edit_Product />}></Route>
       <Route path="/bestSeller" element={<BestSeller />}></Route>
       <Route path='/buy' element={<Order/>}></Route>
       {/* <Route path='/cart/delete' element={<Cart/>}></Route> */}
+      <Route path='mens' element= {<Men />}></Route>
       
     
       
