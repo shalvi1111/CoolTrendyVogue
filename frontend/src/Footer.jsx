@@ -6,14 +6,15 @@ function Footer() {
        <>
         
       
-        <div class="row "  style={{backgroundColor:"#EEEDEB" , width:"100%"}}>
-          <footer>
-        <div class="col-12  mt-5 mx-5 "  style={{display: "flex", flexWrap: "wrap", justifyContent: "space-between", padding: "20px"}}>
+        {/* <div class="row "  style={{backgroundColor:"#EEEDEB" , width:"100%"}}> */}
+          <footer className='mt-5 ' style={{backgroundColor:"#EEEDEB" , width:"100%" }}>
+            <div className="container sticky-bottom row ">
+        <div class="col-12  mt-5 mx-4 "  style={{display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
 
-            <h1 className='fs-4'>SHOPS BY CATEGORIES</h1>
+            <h1 className='fs-4 mt-5'>SHOPS BY CATEGORIES</h1>
           
       </div >
-          <div className='mx-2 text-start '>
+          <div className='mx-4 text-start '>
             <p style={{fontSize:"15px"}}>Dresses & Jumpsuits | Tops | T-Shirts | Shirts | Printed T-shirt | Jackets Accessories | Bottomwear | Outerwear |  Floral Tops  | Floral Tops | Skirts | Shorts | Skorts | Co- | Crop Tops | Floral Dresses | Exclusive Collection | Winterwear | Knitwear |</p>
 
             <h1 className='fs-5'>SHOPS BY COLOURS</h1>
@@ -32,11 +33,12 @@ function Footer() {
             <p style={{fontSize:"15px"}}>About Us | About Bestseller | Privacy policy | T&C |</p>
         </div>
         
-
-      
+        
+        </div>     
       </footer>
-      </div>
+      {/* </div> */}
      </>
+   
      );
 }
 

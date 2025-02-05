@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer , toast } from "react-toastify";
 // import { backendURL } from "../App";
-
-
-const LoginAdmin = () => {
+// import useNavigate from 'react-use-navigate';
+const LoginAdmin = ({setToken}) => {
 
 
   
 
      const [email, setEmail] = useState('');
      const [password , setPassword] = useState('');
-  
+    //  const navigate = useNavigate();
     
   
  
@@ -22,11 +21,18 @@ const LoginAdmin = () => {
       const response = await axios.post( "http://localhost:4000/adminLogin" , {email,password});
       console.log(response);
       if(response.data.success){
-        setPassword(response.data.result)
+        setToken(response.data.token);
       }
-     }
+        else{
+        toast.error(response.data.message);
+        }
+        // navigate("/");
+        
+      }
+     
      catch(err){
-      console.log(err.message)
+      console.log(err.message);
+      toast.error(err.message);
      }
 
    }

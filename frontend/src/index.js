@@ -3,51 +3,30 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter , Route ,Routes} from 'react-router-dom';
 
 import Navbar from './Navbar';
-// import { BrowserRouter } from 'react-router-dom';
 import HomePageofAllProducts from './LandingPage/Home/HomePage';
 
 
-
-// import Shirt from './LandingPage/AllProducts/Shirts';
-
-
-// import ShowProducts from './ShowProducts';
-// import Cardigans from './LandingPage/WinterWear/Cardigans';
-// // import AllDresses from './LandingPage/Dresses/AllDresses';
-// import Accessories from './LandingPage/AllProducts/Accessaries';
-// import BottomWear from './LandingPage/AllProducts/BottomWear';
-// import EveryThing from './LandingPage/EveryThingDenim';
-// import Tops from './LandingPage/AllProducts/Tops';
-// import Jacket from './LandingPage/AllProducts/Jacket';
-// import Tees from './LandingPage/AllProducts/Tees';
-// import Bodycorn from './LandingPage/Dresses/Bodycorn';
-// import FloralDress from "./LandingPage/Dresses/FloralDresses" ;
-// import JumpSuit from './LandingPage/Dresses/JumpSuits';
-// import ShortDress from "./LandingPage/Dresses/ShortDress";
-// import Blazer from "./LandingPage/WinterWear/Blazer" ;
-// import Coat from './LandingPage/WinterWear/Coat';
-// import BootCut from './LandingPage/Jeans/Bootcut';
-// import Ripped from './LandingPage/Jeans/Ripped';
-// import Skinny from './LandingPage/Jeans/Skinny';
-// import Straight from './LandingPage/Jeans/Straight';
-// import WideLeg from './LandingPage/Jeans/WideLeg';
-// import CoOrds from "./LandingPage/co-ords/Co-ords";
 import Footer from './Footer';
 import SalerFormLogin from './Authentication/LoginSaler';
 import SignUpSaler from './Authentication/SignUpSaler';
 import LogOutSaler from './Authentication/LogOutSaler';
-import AddProduct from "./AddProduct/AddProduct";
+
 import EveryThing from './LandingPage/EveryThingDenim';
 import Cart from './LandingPage/Cart';
 import ShowProducts from './ShowProducts';
 import Edit_Product from './Edit';
-import Hero from './LandingPage/Hero';
+// import Hero from './LandingPage/Hero';
 import BestSeller from './BestSeller';
 import Order from './LandingPage/Order';
-import Delete from './LandingPage/Home/Delete';
+
 import Men from './LandingPage/Men';
-// import MainHome from './LandingPage/Home/MainHome';
-// import ShowProduc from './LandingPage/ShowProducts';
+import Women from './LandingPage/Women';
+import Kid from './LandingPage/Kids';
+import About from './LandingPage/About';
+import Contact from './LandingPage/Contact';
+import PlaceOrder from './LandingPage/PlaceOrder';
+import PaymentSuccessful from './LandingPage/PaymentSuccessful';
+import PaymentUnsuccessful from './LandingPage/PaymentUnSuccessful';
 
 
 
@@ -59,43 +38,7 @@ root.render(
    <Navbar />
    <Routes>
       <Route path='/' element={<HomePageofAllProducts />}></Route>
-{/*      
-       All Products Folder 
-      <Route path='/shirts' element={<Shirt />} ></Route>
-      <Route path='/accessories' element={<Accessories/>}></Route>
-      <Route path='/bottomWear' element={<BottomWear/>}></Route>
-      <Route path='/denim' element={<EveryThing/>}></Route>
-      <Route path='/showProduct' element={<ShowProducts/>}></Route>
-      
-      <Route path='/jacket' element={<Jacket/>}></Route>
-      <Route path='/tees' element={<Tees/>}></Route>
-      <Route path='/tops' element={<Tops/>}></Route>
 
-      Dresses Folder 
-
-      <Route path='/bodycon' element={<Bodycorn />}></Route>
-      <Route path='/floralDressess' element={<FloralDress/>}></Route>
-      <Route path='/jumpSuit' element={<JumpSuit/>}></Route>
-      <Route path='/shortDressess' element={< ShortDress/>}></Route>
-
-      Winter Wear
-      <Route path='/blazer' element={<Blazer />}></Route>
-      <Route path='/cardigans' element={<Cardigans />}></Route>
-      <Route path='/coats' element={<Coat />}></Route>
-      <Route path='/jacket' element={<Jacket />}></Route>
-      
-     Shirts Folder
-     <Route path='/shirts' element={<Shirt />} ></Route>
-
-     Jeans Folder
-     <Route path='/bootcut' element={<BootCut />} ></Route>
-     <Route path='/ripped' element={<Ripped />} ></Route>
-     <Route path='/skinny' element={<Skinny />} ></Route>
-     <Route path='/straight' element={<Straight />} ></Route>
-     <Route path='/wideLeg' element={<WideLeg />} ></Route>
-
-     Co-ords
-     <Route path='/co-ords' element={<CoOrds />} ></Route> */}
      
       {/* Saler  */}
 
@@ -104,18 +47,25 @@ root.render(
       <Route path='/logoutuser'element={<LogOutSaler/>}></Route>
 
       {/* Add Product */}
-      <Route path='/home' element={<Hero />}></Route>
-      <Route path='/addProduct' element={<AddProduct/>} ></Route>
+      {/* <Route path='/' element={<Hero />}></Route> */}
+
       <Route path='/productDetail/:id' element={<EveryThing/>}></Route>
        {/* <Route path='/cart/:id' element={<Cart/>}></Route> */}
        <Route path='/cart' element={<Cart/>}></Route>
-       <Route path='/cart/delete' element={<Delete />}></Route>
       <Route path='/listProduct' element={<ShowProducts />}></Route>
       <Route path='/editProduct' element={<Edit_Product />}></Route>
       <Route path="/bestSeller" element={<BestSeller />}></Route>
       <Route path='/buy' element={<Order/>}></Route>
       {/* <Route path='/cart/delete' element={<Cart/>}></Route> */}
-      <Route path='mens' element= {<Men />}></Route>
+      <Route path='/mens' element= {<Men />}></Route>
+      <Route path='/womens' element = {<Women />} ></Route>
+      <Route path='/kids' element = {<Kid />} ></Route>
+      <Route path='/about' element = {<About />} ></Route>
+      <Route path='/contact' element ={<Contact />} ></Route>
+      <Route path='/placeorder' element={<PlaceOrder />} ></Route>
+      <Route path='/paymentSuccessful' element ={<PaymentSuccessful />} ></Route>
+      {/* <Route path='/paymentNotsuccessful' element ={<PaymentNotSuccessful />} ></Route> */}
+      <Route path='/paymentUnsuceessful'  element = {<PaymentUnsuccessful />} ></Route>
       
     
       

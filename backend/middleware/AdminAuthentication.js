@@ -5,13 +5,13 @@ const jwt = require("jsonwebtoken");
 
 const AdminAuthentication = async(req,res,next)=>{
     try{
-           const {result} = req.headers;
+           const {token} = req.headers;
 
-           if(!result){
-              return res.json({success:false, message:"User doesn't exist"})
+           if(!token){
+              return res.json({success:false, message:"User doesn't exist 11"})
            }
-          const result_expand = jwt.verify(result, process.env.JWT_SECRET);
-          if(result_expand != process.env.ADMIN_EMAIL+process.env.ADMIN_PASSWORD){
+          const token_decode = jwt.verify(token, process.env.JWT_SECRET);
+          if(token_decode != process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD){
             return res.json({success:false, message:"No use exist"})
           }
           next();

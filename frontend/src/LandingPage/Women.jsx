@@ -1,38 +1,44 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-function Men() {
-      
-    const [category , setCategory] = useState(null);
-    const [products, setProducts] = useState([]);
-
-    useEffect( ()=>{
+import React from 'react';
+import { useState , useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+function Women() {
+    
+    const [ category , setCategory] = useState(null);
+    const [products, setProducts] = useState("Women");
+     
+       useEffect( ()=>{
         const fetchCateg = async()=>{
             try{
-            const res = await axios.get("http://localhost:4000/getMenCategory");
-            console.log(res.data);
-            if(res.data.success){
-                const menProd = res.data.message.filter( (categ)=> categ.category === "Men");
-                if(menProd.length >0){
-                setCategory("Men");
-                setProducts(menProd);
-                }
-                else{
-                    alert("Category doesn't exist!");
-                    setCategory(null);
-                }
-            }
+          const res = await axios.get("http://localhost:4000/getWomCategory")
+              
+          console.log(res.data.message);
+          if (res.data.success && res.data.message && Array.isArray(res.data.message)) {
+            // if you need to filter by category (if the API returns multiple categories)
+            const womenProd = res.data.message.filter(prod => prod.category === "Women");
+            if (womenProd.length > 0) {
+              setCategory("Women");
+              setProducts(womenProd);
+            } 
+          }
+          else{
+            alert("Category doesn't exist!");
+            setCategory(null);
+          }
+        }catch(err){
+            alert(err.message);
+            setCategory(null);
         }
-        catch(err){
-            alert( err.message);
-            setProducts(null)
-        }
+
+
         }
         fetchCateg();
-    },[])
-    return(
-    <> 
-         {category === "Men" ? (
+       },[]) 
+      
+    return ( 
+        <>
+       
+                {category === "Women" ? (
            <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", padding: "20px" }}>
      
            {products.map((product) => (
@@ -75,20 +81,19 @@ function Men() {
                <p>
                  <strong>Price:</strong> ₹{product.price}
                </p>
-              
+               
              </div>
              </Link>
            ))}
           
          </div>
-              
+           
         ) : (
-          <h1 className='fs-4 text-center m-5 p-5'> "<span style={{color:"red"}}>Oops!</span> No Men's category found. <span style={{color:"purple"}}>Maybe fashion is still loading… ⏳✨</span>"</h1>
-        
+          <h1 className='fs-4 text-center m-5 p-5'> "<span style={{color:"red"}}>Oops!</span> No Women's section? <span style={{color:"maroon"}}>Impossible! </span><span style={{color:"purple"}}>Maybe it's just hiding… 👗✨</span>"</h1>
         )}
     </>
-)
-   
+);
+
 }
 
-export default Men;
+export default Women;

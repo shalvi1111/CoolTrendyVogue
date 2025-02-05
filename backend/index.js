@@ -41,6 +41,7 @@ const { PassThrough } = require("stream");
 const OrderModel = require("./models/OderModel.jsx");
 const CartModel = require("./models/CartModel.jsx");
 const { default: Cart } = require("../frontend/src/LandingPage/Cart.jsx");
+const { read } = require("fs");
 
 
  
@@ -191,6 +192,26 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
     catch(err){
       res.json({success:false , message:err.message})
     }
+   }) ;
+
+   app.get("/getMenCategory" , async(req,res)=>{
+    try{
+      const menCategory = await ProductModel.find({category:"Men"}) ;
+      res.json({success:true , message:menCategory})
+    }
+    catch(err){
+      res.json({success:false , message:err.message})
+    }
+   }) ;
+
+   app.get("/getKidCategory" , async(req,res)=>{
+    try{
+      const prod = await ProductModel.find({category :"Kid"});
+      res.json({success:true , message:prod});
+    }
+    catch(err){
+      res.json({success:false , message:err.message});
+    }
    })
 
   app.post("/sizeqty" , async(req,res)=>{
@@ -220,15 +241,17 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
 
   // Remove Product
 
-  app.delete("/deleteProduct" ,AdminAuthentication, async(req,res)=>{
+  app.delete("/productDetail/:id" , async(req,res)=>{
+    const {id} = req.params ;
     try{
-      const removeProd = await ProductModel.findByIdAndDelete(req.body.id)
+      const removeProd = await ProductModel.findByIdAndDelete(id);
+      // console.log(removeProd);
       res.json({success:true ,message:removeProd })
     }
     catch(err){
       res.json({success:false , message:err.message})
     }
-  })
+  });
 
   // Particular Product Detail
 
@@ -245,27 +268,9 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
   })
 
 
-    // Placing order by Cash on delivery
-    app.post("/placeorder/COD" , async(req,res)=>{
-      try{
-        const {UserId , itmes , price , address} = req.body;
-        const newOder = new OrderModel({
-          UserId ,
-           itmes ,
-            price ,
-             address,
-             paymentMode:"COD",
-             payment:false,
-             date:Date.now()
-        })
-       const order= await newOder.save();
-        res.json({status:true , message:order})
-      }
-      catch(err){
-        res.json({success:false,message:err})
-      }
+    
 
-    })
+   
 
     // PLaceing order by razorpay 
      app.post("/placeorder/razorpay" , async(req,res)=>{
@@ -282,7 +287,7 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
     
 
   // Product's added in cart
-  app.post("/cart/:id" , async(req,res)=>{
+  app.post("/cart" , async(req,res)=>{
 
     try{
        const {image , title, price , qty , sizes } = req.body;
@@ -348,16 +353,77 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
   app.get("/cart/tp" , async(req,res)=>{
      try{
     const data = await CartModel.find({});
-    const totalPrice = data.reduce( (val , prod)=> val+prod.price*prod.qty ,0)
+    const totalPrice = data.reduce( (val , prod)=> { return val+prod.price*prod.qty },0)
     res.json({success:true , message:totalPrice})
      }
      catch(err){
       res.json({success:false, message:err.message})
      }
     // console.log(totalPrice)
-  })
+  });
 
-  // Remove single cart
+  // Placing order by Cash on delivery
+  app.post("/placeorder" , async(req,res)=>{
+    try {
+      const { userId, items, paymentMode, price, address } = req.body;
+  
+      // Validate required fields
+      if (!userId || !items || !paymentMode || !price || !address) {
+        return res.status(400).json({ success: false, error: "Missing required fields" });
+      }
+  
+      // Create a new order
+      const newOrder = new OrderModel({
+        userId,
+        items,
+        paymentMode,
+        price,
+        address,
+        date: Date.now(), // Set current timestamp
+      });
+  
+      const order = await newOrder.save();
+  
+      //  const {id} = req.body;
+      const cart = await CartModel.findById( userId ); // Find by correct userId
+      // console.log(cart ,"47893");
+if (cart) {
+    const deletedCart = await CartModel.deleteMany( {} ); // Delete all cart items
+    // console.log(`Deleted ${deletedCart.deletedCount} cart items for UserId: ${userId}`);
+} else {
+    console.log("No cart found for UserId:", userId);
+}
+
+
+      
+  
+      
+
+  
+      // Respond with success message
+      res.json({
+        success: true,
+        message: "Order placed successfully",
+        order, cart
+      });
+    } catch (err) {
+      console.error("Order Placement Error:", err);
+      res.status(500).json({ success: false, error: "Server error while placing order" });
+    }
+  });
+
+  app.get("/placeorder" , async(req,res)=>{
+    try{
+      const order = await OrderModel.find({});
+      res.json({success:true , message:order});
+    }
+    catch(err){
+      res.json({success:false, message:err.message})
+    }
+  })
+  
+
+ 
 
   
 
@@ -447,8 +513,8 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
         try{
            const {email ,password} = req.body;
            if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD){
-            const result = jwt.sign(email+password , process.env.JWT_SECRET)
-            res.json({success:true, result})
+            const token = jwt.sign(email+password , process.env.JWT_SECRET)
+            res.json({success:true, token})
           } 
 
           // if(!result){

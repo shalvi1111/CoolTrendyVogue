@@ -32,18 +32,29 @@ const ListProducts = () => {
     return <p style={{ color: "red" }}>{error}</p>;
   }
 
+ 
+
+
+
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", padding: "20px" }}>
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", padding: "20px"}}
+    >
      
       {products.map((product) => (
-         <Link to={`/productDetail/${product._id}`} style={{textDecoration:"none", color:"black", display:"flex", flexWrap:"wrap" }}>
+         <Link to={`/productDetail/${product._id}`} style={{textDecoration:"none", color:"black", display:"block",
+          // ...getCardStyle(screenWidth),
+            flex: "1 1 calc(30.33% - 20px)", // Three cards per row
+            maxWidth: "calc(30.33% - 20px)", // Ensure max width matches
+              //  maxWidth: "450px", // Limit max width
+        margin: "10px",
+          }}>
         <div
           key={product._id}
           style={{
             border: "1px solid #ddd",
             borderRadius: "8px",
             padding: "16px",
-            width: "450px",
+            width: "100%",
             textAlign: "center",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           }}
@@ -51,10 +62,10 @@ const ListProducts = () => {
           {/* Display the first image or a placeholder */}
           {product.image && product.image.length > 0 ? (
             <img
-              className="object-fit"
+              className="object-fit "
               src={product.image[0]} // Assuming the first image is displayed
               alt={product.title}
-              style={{ width: "100%", height: "400px", objectFit: "contain", borderRadius: "8px"    }}
+              style={{ width: "100%", height: "300px", objectFit: "contain", borderRadius: "8px"    }}
             />
           ) : (
             <div
@@ -71,36 +82,11 @@ const ListProducts = () => {
               No Image Found
             </div>
           )}
-          <h2 style={{ fontSize: "18px", margin: "12px 0", color: "#333" }}>{product.title}</h2>
+          <h2 style={{ fontSize: "18px", margin: "12px 0", color: "#333", wordWrap: "break-word" }}>{product.title}</h2>
           <p>
             <strong>Price:</strong> ₹{product.price}
           </p>
-          {/* <p>
-            <strong>Category:</strong> {product.category}
-          </p> */}
-
-          {/* <div className="row">
-            <div className="col-6">
-              <button className="btn btn-dark" type="submit">
-                <Link
-                  to={`/editProduct/${product._id}`} // Dynamic route for editing
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Edit
-                </Link>
-              </button>
-            </div>
-            <div className="col-6">
-              <button className="btn btn-dark" type="submit">
-                <Link
-                  to={`/details/${product._id}`} // Dynamic route for details
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Details
-                </Link>
-              </button>
-            </div>
-          </div> */}
+         
         </div>
         </Link>
       ))}

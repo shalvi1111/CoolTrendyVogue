@@ -101,7 +101,7 @@ const EveryThing =() =>{
             }
 
             try{
-              const result = await axios.post(`http://localhost:4000/cart/${id}` ,ShoppingData, {
+              const result = await axios.post(`http://localhost:4000/cart` ,ShoppingData, {
                 headers: { "Content-Type": "application/json" }, // Ensure proper headers
               });
           
@@ -115,7 +115,7 @@ const EveryThing =() =>{
             
             }
             catch(err){
-              console.log(err);
+            //  alert(err);
               alert("Please try again to add a product in cart");
             }
         }
@@ -131,7 +131,7 @@ const EveryThing =() =>{
              <div className="row" key={products._id} >
 
                 <div className="col-7">
-                <img src= {products.image[0]} alt='Product visual' style={{width:"80%"  , height:"auto"}} className='m-2 p-2' />
+                <img src= {products.image?.[0] || 'fallback-image-url.jpg'} alt='Product visual' style={{width:"80%"  , height:"auto"}} className='m-2 p-2' />
                 <div className="desription m-1 p-2">
                   <h1 className='fs-4 text-muted '>Description</h1>
                     <p className='text-muted p-2 m-2' style={{width:"100%"}}> 
