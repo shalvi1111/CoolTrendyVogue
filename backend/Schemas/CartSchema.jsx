@@ -15,14 +15,14 @@ const CartSchema = Schema({
         type:String,
         required: true
      },
-     qty:{
-        type:Number ,
-        required:true
-     },
-     sizes:{
-        type:Array,
-        required:true
-     },
+   //   qty:{
+   //      type:Number ,
+   //      required:true
+   //   },
+   //   size:{
+   //      type:Array,
+   //      required:true
+   //   },
      price:{
         type:Number,
         required:true

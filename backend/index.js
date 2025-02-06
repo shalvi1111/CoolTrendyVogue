@@ -216,8 +216,8 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
 
   app.post("/sizeqty" , async(req,res)=>{
     try{
-      const {size } = req.body;
-      const newSize =  new sizeModel({size});
+      const {size ,qty } = req.body;
+      const newSize =  new sizeModel({size ,qty});
        const saveSize = await newSize.save();
       res.json({success:true,message:saveSize})
     }
@@ -290,13 +290,13 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
   app.post("/cart" , async(req,res)=>{
 
     try{
-       const {image , title, price , qty , sizes } = req.body;
+       const {image , title, price  } = req.body;
       const newProd = new CartModel({
       title ,
       price ,
-      qty,
+      // qty,
       image ,
-      sizes, 
+      // sizes, 
      
     })
     await newProd.save();

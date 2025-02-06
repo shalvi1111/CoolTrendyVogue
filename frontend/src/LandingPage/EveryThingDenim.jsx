@@ -16,7 +16,7 @@ const EveryThing =() =>{
          
          const [products, setProducts] = useState(null);
          const [size , setSize] = useState(null);
-        //  const [qty,setQty] = useState();
+         const [qty,setQty] = useState(1);
 
        
         //  const [loading, setLoading] = useState(true);
@@ -48,12 +48,13 @@ const EveryThing =() =>{
      
         //  if (loading) return <div>Loading...</div>;
 
-         const hadleChangeSQ = (e )=>{
-          console.log(e);
+         const hadleChangeSQ = (e  )=>{
+          // console.log(e , "52");
         
           
            
               setSize(e);
+              setQty(e)
           
               
          }
@@ -66,10 +67,10 @@ const EveryThing =() =>{
           // ndata.append("qty" , qty);
           // ndata.append("size",size);
           const sizeQtyData = {
-            // qty:qty,
+            qty:qty,
             size:size      
           } 
-          //  console.log(sizeQtyData,"8790")
+           console.log(sizeQtyData,"8790")
           try{
           const resultSize = await axios.post("http://localhost:4000/sizeqty" , sizeQtyData,{
                 headers: { "Content-Type": "application/json" }, // Ensure proper headers
@@ -95,7 +96,7 @@ const EveryThing =() =>{
             const ShoppingData = {
               image : products.image[0],
               title: products.title,
-              qty : products.qty ,
+              // qty : products.qty ,
               price : products.price ,
               // sizes : products.sizes
             }
@@ -104,13 +105,13 @@ const EveryThing =() =>{
               const result = await axios.post(`http://localhost:4000/cart` ,ShoppingData, {
                 headers: { "Content-Type": "application/json" }, // Ensure proper headers
               });
-          
+                  console.log(result.data.message);
               if(result.data.success){
                 alert("Product added in cart successfully!")
                 
               }
               else{
-                alert("Please try again to add a product in cart")
+                alert(result.data);
               }
             
             }
@@ -156,14 +157,15 @@ const EveryThing =() =>{
                     <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                       
                        <div class="btn-group me-2" role="group" aria-label="First group">
-                        <button onClick={()=> hadleChangeSQ("XS")} class="btn btn-outline-secondary" >XS</button>
+                        <button onClick={()=> hadleChangeSQ("XS" )} class="btn btn-outline-secondary" >XS</button>
 
                         <button onClick={()=>hadleChangeSQ("S" )} class="btn btn-outline-secondary">S</button>
                         <button onClick={()=>hadleChangeSQ("M" )} class="btn btn-outline-secondary">M</button>
                         <button onClick={()=>hadleChangeSQ("L" )} class="btn btn-outline-secondary">L</button>
                         <button onClick={()=>hadleChangeSQ("XL" )} class="btn btn-outline-secondary">XL</button>
                         <button onClick={()=>hadleChangeSQ("XXL" )} class="btn btn-outline-secondary">XXL</button>
-                       
+                        <input type='number' onChange={(e)=>setQty(Number(e.target.value))} placeholder='Enter Quantity' value={qty} style={{width:"50px" , marginLeft:"16px"}} />
+          
                        {/* <Select defaultValue={size} options={sizeOption} placeholder="Select size" isMulti noOptionsMessage={()=>"No size found"}/> */}
                         {/* {Array.isArray(products.sizes)?products.sizes.map((size , idx)=>(
                            <button type="button" class="btn btn-outline-secondary" key={idx}>{size}</button>
