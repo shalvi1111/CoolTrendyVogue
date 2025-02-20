@@ -57,7 +57,7 @@ function Cart() {
         {carts.map((cart) => (
           <div className="container mb-5" key={cart._id}>
             <div className="row">
-              <div className="col-10 me-2 ms-5">
+              <div className="col-12 me-2 ms-5">
                 <div className="row" style={{ backgroundColor: 'white' }}>
                   <div className="col-4 mt-2">
                     <p><b>PRODUCT</b></p>
@@ -80,9 +80,26 @@ function Cart() {
                     <p><b>PRICE</b></p>
                     <strong>&#8377;{cart.price}</strong>
                   </div>
-                  <div className="col-2 text-end">
+                  <div className="col-2 text-center">
                     <p><b>Quantity</b></p>
-                    <strong className="me-4">{cart.qty}</strong>
+                    {/* <div className="d-flex h-100  align-items-end "> */}
+                
+                     {cart.sizes.map((q, idx) => (
+                    <p key={idx}><strong>{q.qty}</strong></p>
+                    ))}
+      
+                {/* </div> */}
+                  </div>
+
+                  <div className="col-2 text-center">
+                    <p><b>Size</b></p>
+                    {/* <div className="d-flex h-100  align-items-end "> */}
+                
+                     {cart.sizes.map((s, idx) => (
+                    <p key={idx}><strong>{s.size}</strong></p>
+                    ))}
+      
+                {/* </div> */}
                   </div>
                 </div>
               </div>

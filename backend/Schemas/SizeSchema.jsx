@@ -9,7 +9,13 @@ const sizeSchema = Schema({
     qty:{
         type:Number,
         required:true
-    }
+    } ,
+    productId: {
+        type: String,  // Use ObjectId for productId
+        // ref: 'Product',               // Reference to the Product model
+        required: true
+      },
+    
 })
 
 module.exports =sizeSchema;

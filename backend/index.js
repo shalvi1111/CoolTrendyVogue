@@ -21,6 +21,7 @@ const AdminAuthentication = require("./middleware/AdminAuthentication.js");
 
 const bcrypt = require('bcrypt');
 
+
   
 
 // const passport = require("passport");
@@ -35,31 +36,29 @@ const jwt = require("jsonwebtoken");
   
  const path = require("path");
 const productSchema = require("./Schemas/ProductSchema.jsx");
-const { nextTick, title } = require("process");
-const passport = require("passport");
-const { PassThrough } = require("stream");
+
 const OrderModel = require("./models/OderModel.jsx");
 const CartModel = require("./models/CartModel.jsx");
-const { default: Cart } = require("../frontend/src/LandingPage/Cart.jsx");
-const { read } = require("fs");
+
+const Stripe = require("stripe");
 
 
- 
-   
+
+
+   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
 
 // app.use(cors());
 app.use(
   cors({
-    origin: "http://localhost:3000", // Replace with your React app's URL
+    // origin: "http://localhost:3000", // Replace with your React app's URL
     credentials: true,              // Allow credentials (cookies, etc.)
   })
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-// app.use(cookieParser());
+
 
 
 const createSecretToken = (id) => {
@@ -68,15 +67,7 @@ const createSecretToken = (id) => {
   });
 };
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads/"); // Upload files to 'uploads/' directory
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + path.extname(file.originalname)); // Add timestamp to file name
-//   },
-// });
-// const storage = multer({ storage });
+
 
 
 
@@ -92,8 +83,7 @@ const createSecretToken = (id) => {
 
   // Route to add a product
 app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS",maxCount:1}, {name:"imageT",maxCount:1} , {name:"imageFourth",maxCount:1}]) , async (req, res) => {
-  //  app.post("/addProduct", async(req,res)=>{
-  // console.log(req.body);
+
   try {
     const {title ,
       category ,
@@ -119,27 +109,13 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
      )
 
     
-      // const ProductData = {
-      //   title ,
-      // category ,
-      // description,
-      // price :Number(price),
-      // subCategory,
-      // sizes :JSON.parse(sizes), 
-      // bestSeller : bestSeller === "true"? true:false,
-      // image : imageurl,
-      // qty: Number(qty),
-      // date : Date.now()
-      // }
-        // console.log(ProductData);
+     
         const newPrdouct = new ProductModel({
           title ,
       category ,
       description,
       price :Number(price),
-      // subCategory,
-      // sizes :JSON.parse(sizes), 
-      // sizes: typeof sizes === "String" ? JSON.parse(sizes) : sizes, 
+      
 
       bestSeller : bestSeller === "true"? true:false,
       image : imageurl,
@@ -180,6 +156,28 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
     // console.log(besteller)
   }) ;
 
+   app.put("/edit/:id" , async(req,res)=>{
+    try{
+      const {id}= req.params;
+        const product = await ProductModel.findByIdAndUpdate(id, req.body, { new: true });
+        // console.log(req.body ,"tgrfeds");
+        if(!product){
+          // console.log("error, Product doesn't exist");
+         return res.redirect("/listProduct");
+        }
+          // Object.assign(product,req.body);
+          // await product.save();
+         
+
+      res.json({success:true,message: product});
+    }
+    catch(err){
+      res.json({success:false,message:err.message});
+    }
+   });
+
+  
+
    app.get("/getWomCategory" , async(req,res)=>{
     try{
     // const {category} = req.params ;
@@ -216,21 +214,60 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
 
   app.post("/sizeqty" , async(req,res)=>{
     try{
-      const {size ,qty } = req.body;
-      const newSize =  new sizeModel({size ,qty});
-       const saveSize = await newSize.save();
-      res.json({success:true,message:saveSize})
+      // const productId= req.params.id;
+      // console.log(productId);
+      const {size ,qty , productId  } = req.body;
+      // if(!productId || !size || !qty){
+      //   res.json({success:false , message:"All fields are required to fill"});
+      // }
+      const product =  await ProductModel.findById( productId);
+      const existingSize = product.sizes.find( (s)=> s.size === size);
+      if(existingSize){
+        existingSize.qty += qty;
+      }
+      else{
+        product.sizes.push({size ,qty});
+
+      }
+       const saveSize = await product.save();
+       
+    let cart = await CartModel.findOne({ title: product.title, image: product.image, "sizes.size": size   });
+    
+    if (!cart) {
+      // 
+      cart = new CartModel({
+        image: product.image,
+        title: product.title,
+        price: product.price,
+        sizes: [{ size, qty }]
+      });
+    } else {
+      // update size
+      const cartSize = cart.sizes.find((s) => s.size === size);
+      if (cartSize) {
+        cartSize.qty += qty;
+      } else {
+        cart.sizes.push({ size, qty });
+      }
+    }
+    const cart1 = await cart.save();
+
+      res.json({success:true,message:saveSize ,cart1 })
     }
     catch(err){
       res.json({success:false,message:err.message})
     }
-  })
+  });
    
-   app.get("/sizeqty" , async(req,res)=>{
+   app.get("/sizeqty/:id" , async(req,res)=>{
     try{
-    //  const {id} = req.params;
-     const getSizes = await sizeModel.find({});
-     res.json({success:true, message:getSizes})
+     const {id} = req.params;
+    //  console.log(productId);
+    //  const objectId = new mongoose.Types.ObjectId(productId);
+     const getSizes = await CartModel.findById(id).select("sizes");
+     
+     res.json({success:true, message:getSizes});
+    //  console.log(getSizes);
     } 
     catch(err){
       res.json({success:false, message:err.message})
@@ -272,10 +309,7 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
 
    
 
-    // PLaceing order by razorpay 
-     app.post("/placeorder/razorpay" , async(req,res)=>{
-
-     })
+    
 
     //  All order for admin panel 
 
@@ -353,7 +387,9 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
   app.get("/cart/tp" , async(req,res)=>{
      try{
     const data = await CartModel.find({});
-    const totalPrice = data.reduce( (val , prod)=> { return val+prod.price*prod.qty },0)
+    const totalPrice = data.reduce( (val , prod)=> 
+      {return val + prod.sizes.reduce((sum, size) => sum + size.qty * prod.price, 0) } ,0);
+
     res.json({success:true , message:totalPrice})
      }
      catch(err){
@@ -376,7 +412,8 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
       const newOrder = new OrderModel({
         userId,
         items,
-        paymentMode,
+        paymentMode:"COD",
+        payment:true,
         price,
         address,
         date: Date.now(), // Set current timestamp
@@ -416,12 +453,57 @@ if (cart) {
     try{
       const order = await OrderModel.find({});
       res.json({success:true , message:order});
+      
+      
     }
     catch(err){
       res.json({success:false, message:err.message})
     }
   })
   
+
+  // PLaceing order by Stripe 
+  app.post("/placeorder/stripe" , async(req,res)=>{
+    try{
+      
+      const {userId,items,  paymentMode, price, address, } = req.body;
+      const {origin} = req.headers;
+      const orderData = {
+     
+        userId,
+        items,
+        paymentMode:"Stripe",
+        payment:false,
+        price,
+        address,
+        date: Date.now(), // Set current timestamp
+      };
+
+      const newOrder = new OrderModel(orderData);
+    const orderPlaced=  await newOrder.save();
+    //   Stripe  Session
+    const line_items = items.map((item)=>({
+      price_data:{
+        currency:"ruppee",
+        product_data:{
+          name:item.name
+        } ,
+        unit_amount:item.price*100
+      } ,
+      quantity:item.quantity
+    }))
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      success_url: `${origin}/order-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/order-cancelled`,
+    })
+  
+    res.json({success:true,sessionId:session.id});
+    }
+    catch(err){
+     res.json({success:false,message:err.message})
+    }
+    })
 
  
 

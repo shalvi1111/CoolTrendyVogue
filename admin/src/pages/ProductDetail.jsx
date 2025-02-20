@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React ,{useState,useEffect } from 'react';
 import {  useNavigate, useParams} from 'react-router-dom';
+import {Link} from "react-router-dom";
 
 function DetailProd() {
     const  {id}  = useParams();  
@@ -67,79 +68,6 @@ function DetailProd() {
   
 
 
-   //  if (loading) return <div>Loading...</div>;
-
-    // const hadleChangeSQ = (e )=>{
-    //  console.log(e);
-   
-     
-      
-    //      setSize(e);
-     
-         
-    // }
-
-
-
-  //  const hadleSubmitSQ = async(e)=>{
-  //    e.preventDefault();
-  //    // const ndata = new FormData();
-  //    // ndata.append("qty" , qty);
-  //    // ndata.append("size",size);
-  //    const sizeQtyData = {
-  //      // qty:qty,
-  //      size:size      
-  //    } 
-  //    //  console.log(sizeQtyData,"8790")
-  //    try{
-  //    const resultSize = await axios.post("http://localhost:4000/sizeqty" , sizeQtyData,{
-  //          headers: { "Content-Type": "application/json" }, // Ensure proper headers
-  //        });
-  //    console.log(resultSize.data.message ,"105");
-  //    if(resultSize.data.success){
-  //      alert("Size added successfully ");
-  //    }
-  //    // setSize(resultSize.data.message);
-  //    }
-  //    catch{
-  //      alert("Please select the size again")
-  //    }
-  //   }
-
-
-   //  useEffect(() => {
-   //   console.log("Current qty:", qty);  // Log qty when it updates
-   // }, [qty]);
-//    const handleSubmitCart = async(event)=>{
-//        event.preventDefault() ;
-// //  image , title, price , qty , sizes ,
-//        const ShoppingData = {
-//          image : products.image[0],
-//          title: products.title,
-//          qty : products.qty ,
-//          price : products.price ,
-//          // sizes : products.sizes
-//        }
-
-  //      try{
-  //        const result = await axios.post(`http://localhost:4000/cart` ,ShoppingData, {
-  //          headers: { "Content-Type": "application/json" }, // Ensure proper headers
-  //        });
-     
-  //        if(result.data.success){
-  //          alert("Product added in cart successfully!")
-           
-  //        }
-  //        else{
-  //          alert("Please try again to add a product in cart")
-  //        }
-       
-  //      }
-  //      catch(err){
-  //      //  alert(err);
-  //        alert("Please try again to add a product in cart");
-  //      }
-  //  }
     if (!products) return <div>Product not found!</div>;
  
   
@@ -168,54 +96,20 @@ return (
                <p ><b className='fs-2'>&#8377;{products.price} &nbsp; </b>
                    <span style={{color:"green" , fontWeight:"600"}}>inclusive of all taxes</span> </p>
 
-                   {/* <div className="size mt-5 border-bottom">
-                       <p className='fs-4 mb-5' style={{fontWeight:"700"}}>Select Size</p>
-
-                      <p style={{fontWeight:"600"}} >Size chart</p>
-
-               <div className="col-8 mb-4">
-               <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups"> */}
-                 
-                  {/* <div class="btn-group me-2" role="group" aria-label="First group">
-                   <button onClick={()=> hadleChangeSQ("XS")} class="btn btn-outline-secondary" >XS</button>
-
-                   <button onClick={()=>hadleChangeSQ("S" )} class="btn btn-outline-secondary">S</button>
-                   <button onClick={()=>hadleChangeSQ("M" )} class="btn btn-outline-secondary">M</button>
-                   <button onClick={()=>hadleChangeSQ("L" )} class="btn btn-outline-secondary">L</button>
-                   <button onClick={()=>hadleChangeSQ("XL" )} class="btn btn-outline-secondary">XL</button>
-                   <button onClick={()=>hadleChangeSQ("XXL" )} class="btn btn-outline-secondary">XXL</button>
-                  
-                  {/* <Select defaultValue={size} options={sizeOption} placeholder="Select size" isMulti noOptionsMessage={()=>"No size found"}/> */}
-                   {/* {Array.isArray(products.sizes)?products.sizes.map((size , idx)=>(
-                      <button type="button" class="btn btn-outline-secondary" key={idx}>{size}</button>
-                   )) : "No prod avlbl"} */}
-                   {/* <input type='text' placeholder='Enter size' value={}/> */}
-         
-                {/* </div> */} 
-
-                 {/* <form onSubmit={hadleSubmitSQ}>
-                   <button className='btn btn-dark' type='submit'>Sumit size</button>
-                </form> */}
-
-               {/* </div>
-              </div>
-
-                   </div> */}
+            
 
                   
                      <div className="row mt-4" >
                     
-                        {/* <div className="col-6 ">
-                        <form onSubmit={handleSubmitCart}>
-                           <button className='btn btn-dark ' style={{width:"80%" }} type='submit'>
-                       {/* <Link to={`/cart`} style={{textDecoration:"none" , color:"white"}} >Add to shopping bag</Link></button> */}
-                      {/* Add to shopping bag </button>
-                      </form>
-                      </div> */} 
-                      <div className="col-6 ">
                       
-                       <button className='btn btn-dark' type='submit' value={delProd} onClick={() => handleDelete(products._id)} > DELETE PRODUCT</button>
+                      <div className="col-4 ">
+                      
+                       <button className='btn btn-dark' type='submit' value={delProd} onClick={() => handleDelete(products._id)} > DELETE </button>
                        
+                      </div>
+                      
+                      <div className="col-6">
+                      <button className='btn btn-dark' ><Link to={`/edit/${products._id}`}  style={{textDecoration:"none" , color:"white" }}>EDIT</Link></button>
                       </div>
 
                      
@@ -224,30 +118,7 @@ return (
                       </div>
                    
 
-                   {/* <div className="social-media mb-5 ">
-                   <i className="fa fa-facebook-square m-2 fs-4" aria-hidden="true"></i>
-                   <i className="fa fa-twitter m-2 fs-4" aria-hidden="true"></i>
-                   <i className="fa fa-pinterest-square m-2 fs-4" aria-hidden="true"></i>
-                   </div> */}
-
-                   {/* <p className='fs-5' style={{color:"#1A3636" , fontWeight:"400"}}>CHECK PINCODE FOR DELIEVRY</p>
-                   <form>
-                       <input type='text' placeholder='Enter your Pincode' ></input> &nbsp;
-                       <button className='btn btn-dark m-2'>Check</button>
-                   </form> */}
-
-                   {/* <div className="alternation  text-muted">
-                       <p className='m-2 fs-5' ><i class="fa fa-scissors" aria-hidden="true" style={{color:"#A04747"}}></i> &nbsp;
-                       Free alternation at store</p>
-
-                       <p className='m-2 fs-5' ><i class="fa fa-undo" aria-hidden="true"style={{color:"#A04747"}}></i>&nbsp;
-                       15 days return policy</p>
-
-                       <p className='m-2 fs-5' ><i class="fa fa-credit-card-alt" aria-hidden="true" style={{color:"#A04747"}}></i> &nbsp;
-                       Easy checkout with multiple payment options</p>
-
                   
-                   </div> */}
                    </div>
 
                

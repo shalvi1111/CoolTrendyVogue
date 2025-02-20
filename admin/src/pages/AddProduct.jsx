@@ -80,18 +80,23 @@ const AddProduct = () => {
 
   return (
     <div className="container m-5 ">
+      <div className="row">
+        <div className="col-6">
       <h1 className="fs-4 mb-2" style={{textDecoration:"underline"}}><i><b>The future, delivered today.</b></i></h1>
-      <form onSubmit={handleSubmit} style={{width:"500px"}}>
-        <div>
+      <form onSubmit={handleSubmit} style={{width:"500px"}} className="needs-validation" novalidate>
+        <div className="col md-4">
           <label className="form-label" htmlFor="title"><b>Title:</b></label>
           <input
             type="text"
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="form-control"
+            className="form-control is-invalid"
             required
           />
+            <div class="invalid-feedback">
+        Please choose a title.
+      </div>
         </div>
         <div>
           <label className="form-label" htmlFor="title"><b>Category:</b></label>
@@ -100,9 +105,13 @@ const AddProduct = () => {
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className="form-control"
+            className="form-control is-invalid"
             required
           />
+           <div class="invalid-feedback">
+        Please select a category.
+      </div>
+
         </div>
         <div>
           <label className="form-label" htmlFor="description"><b>Description:</b></label>
@@ -110,9 +119,12 @@ const AddProduct = () => {
             name="description"
             value={formData.description}
             onChange={handleChange}
-             className="form-control"
+             className="form-control is-invalid"
             required
           />
+           <div class="invalid-feedback">
+            Fill the description
+      </div>
         </div>
         <div>
           <label className="form-label" htmlFor="price"><b>Price:</b></label>
@@ -121,9 +133,12 @@ const AddProduct = () => {
             name="price"
             value={formData.price}
             onChange={handleChange}
-            className="form-control"
+            className="form-control is-invalid"
             required
           />
+           <div class="invalid-feedback">
+        Enter a price.
+      </div>
         </div>
        
         <div class="form-check">
@@ -157,6 +172,17 @@ const AddProduct = () => {
 
         <button type="submit" className="btn btn-dark mt-4">Add Product</button>
       </form>
+      </div>
+     
+     <div className="col-4 m-2 p-2 text-center">
+     <img
+                src="../assets/images/BrandLogo.png"
+                alt="Signup"
+                style={{ width: "100%"  , height:"500px"}}
+              />
+     </div>
+
+      </div>
     </div>
   );
 };

@@ -7,17 +7,17 @@ const productSchema = Schema({
     //   image
     description :{
         type:String ,
-        required:true
+        // required:true
        
     },
     title:{
        type:String ,
-       required:true
+      //  required:true
      
     },
     price :{
         type:Number,
-        required: true
+        // required: true
        
     } ,
     image : {
@@ -30,7 +30,7 @@ const productSchema = Schema({
       } ,
       category:{
         type:String,
-        required:true
+        // required:true
       },
       // subCategory:{
       //   type:String,
@@ -45,8 +45,13 @@ const productSchema = Schema({
       },
       date:{
         type:Number,
-        required:true
-      }
+        // required:true
+      },
+       sizes:[
+        {size : String ,
+          qty :Number
+        }
+       ]
     // qty:{
     //     type:Number
     // }

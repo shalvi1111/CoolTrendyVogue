@@ -65,7 +65,7 @@ const SalerFormLogin = () => {
   return (
     <div className="form_container m-5 p-5">
       <form onSubmit={handleSubmit}>
-      <h2 className="fs-4 text-center">Login Account</h2>
+     
       <div className="row ">
       <div className="col-6">
       <img
@@ -76,6 +76,7 @@ const SalerFormLogin = () => {
       </div>
       
           <div className="col-4 offset-2">
+          <h2 className="fs-4 text-start mb-4"><b>Login Account</b></h2>
             <div className="row">
         <div className="col-7" >
           <label htmlFor="email" class="form-label">Email</label>

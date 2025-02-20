@@ -1,10 +1,12 @@
 import React from 'react';
-function OrderItem() {
+import ListItems from './ListItems';
+function Home() {
     return ( 
         <div className="container">
-             <h1>order</h1>
+            <ListItems />
         </div>
      );
 }
 
-export default OrderItem;
+export default Home;
+

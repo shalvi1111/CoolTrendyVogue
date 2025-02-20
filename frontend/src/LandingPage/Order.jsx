@@ -2,8 +2,8 @@ import React from 'react';
 function Order() {
     return ( 
        <div className="container">
-        <div className="row mb-5 p-2">
-            <div className="col-4 m-4">
+        <div className="row mb-5 ">
+            <div className="col-4 m-2">
               <h1 className='fs-2' style={{textDecoration:"underline"}}><strong><i>Shipping <span style={{color:"#A3567A"}}>Address</span> </i></strong><i class="fa fa-map-marker" aria-hidden="true"></i></h1>
               <form>
                  <div className='mt-4'>

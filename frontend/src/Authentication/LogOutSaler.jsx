@@ -5,7 +5,7 @@ function LogOutSaler() {
     const Logout = ()=>{ 
        
         window.localStorage.removeItem("isLoggedIn")
-        alert("LoggedOut")
+        alert("User Logged out successfully")
         navigate('/')
     }
 

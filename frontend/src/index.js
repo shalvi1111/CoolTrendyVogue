@@ -12,7 +12,7 @@ import SignUpSaler from './Authentication/SignUpSaler';
 import LogOutSaler from './Authentication/LogOutSaler';
 
 import EveryThing from './LandingPage/EveryThingDenim';
-import Cart from './LandingPage/Cart';
+import Cart from './LandingPage/Shopping';
 import ShowProducts from './ShowProducts';
 import Edit_Product from './Edit';
 // import Hero from './LandingPage/Hero';
@@ -27,6 +27,7 @@ import Contact from './LandingPage/Contact';
 import PlaceOrder from './LandingPage/PlaceOrder';
 import PaymentSuccessful from './LandingPage/PaymentSuccessful';
 import PaymentUnsuccessful from './LandingPage/PaymentUnSuccessful';
+import NotFound from './LandingPage/NotFound';
 
 
 
@@ -66,7 +67,7 @@ root.render(
       <Route path='/paymentSuccessful' element ={<PaymentSuccessful />} ></Route>
       {/* <Route path='/paymentNotsuccessful' element ={<PaymentNotSuccessful />} ></Route> */}
       <Route path='/paymentUnsuceessful'  element = {<PaymentUnsuccessful />} ></Route>
-      
+      <Route path='*' element = {<NotFound />}></Route>
     
       
 

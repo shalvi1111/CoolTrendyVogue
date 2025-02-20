@@ -1,54 +1,55 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 function Cart() {
-   const id = useParams();
+  //  const {productId} = useParams();
    const navigate = useNavigate();
-   console.log(id);
+  
+
+  //  console.log(id);
   // const prodid = carts.map( (cart)=>cart._id)
   // console.log(prodid);
   const [carts, setCarts] = useState([]);
   const [count, setCount] = useState(0);
-  const [sizes, setSizes] = useState([]);
-  const [qty , setQty] = useState(0);
+  // const [sizes, setSizes] = useState([]);
+  // const [qty , setQty] = useState(0);
   const [cartT, setCarT] = useState(0);
   const [remove, setRemove] = useState(null);
+  // const [sizeQtyDetails, setSizeQtyDetails] = useState({});
+
 
 
     
   useEffect(() => {
     const fetchCartData = async () => {
-      try {
+     try{
         const result = await axios.get(`http://localhost:4000/cart`);
         const result1 = await axios.get('http://localhost:4000/cart/count');
         const result2 = await axios.get('http://localhost:4000/cart/tp');
-        setCarT(result2.data.message);
-
-        const resSize = await axios.get('http://localhost:4000/sizeqty');
-    //     console.log(resSize);
-    //     console.log(resSize.data.message.map(s=>s.size ),"fred");
-    //    console.log(Array.isArray(sizes))
-    //     setSizes(resSize.data.message.map(s => s.size));
-    //     setQty(resSize.data.message);
-
-     if(resSize.data && resSize.data.message){
-         const sizes = resSize.data.message.map( s=> s.size);
-         setSizes(sizes);
-         const qt = resSize.data.message.map( q=> q.qty);
-         setQty(qt);
-     }
-        setCount(result1.data.message);
+        console.log(result.data.message);
         setCarts(result.data.message);
-      } catch (err) {
-        alert(err.message);
-      }
-    };
-    fetchCartData();
-  }, []);
+        setCarT(result2.data.message);
+        setCount(result1.data.message);
+
+     
+
+     } catch(err){
+      console.log(err);
       
+     }
+
+   
+
+};
+
+fetchCartData();
+}, []);
+      
+
+
+
 
 
       
@@ -73,12 +74,25 @@ function Cart() {
   };
 
   return (
+    
+     
     <div className="contain">
-      <h1 className="text-center fs-2 p-2 m-5" style={{ textDecoration: 'underline' }}>
+        
+              <h1 className="text-center fs-2 p-2 m-5" style={{ textDecoration: 'underline' }}>
         <i>
           TRACK <span style={{ color: '#A3567A' }}>MY ORDER</span>
         </i>
       </h1>
+      {carts.length === 0 ? (
+      <div className="text-center mt-5">
+        <h2 className="text-muted">🛍️ Your cart is empty</h2>
+        <p>Add items to your cart to continue shopping!</p>
+        <button className="btn btn-dark mt-3" onClick={() => navigate("/")}>
+          Shop Now
+        </button>
+      </div>
+    ) : (
+       <>
       <div className="details">
         <div className="row" style={{ backgroundColor: 'white', alignItems: 'center' }}>
           <hr />
@@ -123,60 +137,101 @@ function Cart() {
           </div>
         </div>
         <hr />
-        {carts.map((cart) => (
-          <div className="container mb-5" key={cart._id}>
-            <div className="row">
-              <div className="col-10 me-2 ms-5">
-                <div className="row" style={{ backgroundColor: 'white' }}>
-                  <div className="col-4 mt-2">
-                    <p><b>PRODUCT</b></p>
-                    <div className="row text-muted">
-                      <div className="col-4">
-                        <img
-                          src={cart.image[0]}
-                          alt="Product Image"
-                          className='object-fit-fill'
-                          style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                        />
-                      </div>
-                      <div className="col-6 m-3 text-center">
-                        <h1 className="fs-5">{cart.title}</h1>
-                        <div className="size">
+       
 
-{/* {sizes.flatMap(s => s.size).map((size, idx) => ( */}
 
-{sizes.map((size,idx) => (
- <p key={idx}> 
-  <strong  >{size}</strong>
-  </p>
- ))}  
-</div>
-                      </div>
-                    </div>
+        
+{carts.map((cart) => (
+          <div className="container-lg  mb-5" key={cart._id}>
+
+
+            <div className="d-flex gap-4 justify-content-between w-full" style={{ backgroundColor: 'white', maxWidth: "100%" }}>
+              <div className=" mt-2">
+                <p><b>PRODUCT</b></p>
+                <div className="d-flex text-muted">
+                  <div className="">
+                    <img
+                      src={cart.image[0]}
+                      alt="Product picture"
+                      className='object-fit-fill'
+                      style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                    />
                   </div>
-                  <div className="col-3">
-                    <p><b>PRICE</b></p>
-                    <strong>&#8377;{cart.price}</strong>
-                  </div>
-                  <div className="col-2 text-end">
-                    <p><b>Quantity</b></p>
-                    <strong className="me-4">{qty.map((q,idx)=>( <p key={idx}> {q}</p>))}</strong>
-                  </div>
-                  <div className="col-3 text-end mt-5 pt-2">
-                    <button className="btn btn-dark" onClick={() => handleDelete(cart._id)} value={remove}>
-                       Remove
-                    </button>
-                  </div>
+
+
+                </div>
+              </div>
+
+              <div className=" ">
+                <p className='mb-0'><b>Name</b></p>
+                <div className="d-flex h-100  align-items-center ">
+                  <h1 className="fs-5">{cart.title}</h1>
+                </div>
+              </div>
+              
+
+              <div className=" ">
+                <p className='mb-0'><b>Sizes</b></p>
+                <div className="d-flex gap-3 h-100 align-items-center   text-center">
+
+              <div>
+                   {cart.sizes.map((s, idx) => (
+               <p key={idx}><strong>{s.size}</strong></p>
+                    ))}
+        </div>
+    
+ 
+
+              </div>
+              </div>
+
+              <div className=" ">
+                <p className='mb-0'><b>PRICE</b></p>
+                <div className="d-flex h-100  align-items-center ">
+                <strong>&#8377;{cart.price} </strong>
+                </div>
+              </div>
+
+
+
+              <div className=" ">
+                <p className='mb-0'><b>Quantity</b></p>
+                <div className="d-flex h-100  align-items-center ">
+               
+                   {cart.sizes.map((q, idx) => (
+               <p key={idx}><strong>{q.qty}</strong></p>
+                    ))}
+      
+                </div>
+              </div>
+
+
+              <div className=" text-end mt-5 pt-2">
+                
+              </div>
+
+              <div className=" ">
+                <p className='mb-0 opacity-0'><b>Name</b></p>
+                <div className="d-flex h-100  align-items-center ">
+                <button className="btn btn-dark" onClick={() => handleDelete(cart._id)} value={remove}>
+                  Remove
+                </button>
                 </div>
               </div>
             </div>
-            <div className="row">
-             
-            </div>
+
+
+
           </div>
         ))}
       </div>
+      </>
+    )}
+
+     
     </div>
+
+      
   );
 }
 

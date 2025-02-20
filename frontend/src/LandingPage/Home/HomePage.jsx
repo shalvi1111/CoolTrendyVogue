@@ -34,7 +34,7 @@ import NewCollections from '../../NewCollections';
         <li className="nav-item  ms-5">
         {/* <button onClick={()=> fiterWomer("Women")}> */}
           <Link className="nav-link fs-5" to="/womens" >
-            <b>WOMEN</b>
+            <b>WOMENS</b>
           </Link>
           {/* </button> */}
         </li>

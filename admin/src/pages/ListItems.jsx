@@ -86,6 +86,7 @@ const ListItems = () => {
           <p>
             <strong>Price:</strong> ₹{product.price}
           </p>
+            
          
         </div>
         </Link>
