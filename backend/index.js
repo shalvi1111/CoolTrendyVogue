@@ -74,7 +74,7 @@ const createSecretToken = (id) => {
 
 
 
-  app.get("/" , async(req,res)=>{
+  app.get("*" , async(req,res)=>{
     // res.send("Root path");
     res.render("/listProduct");
     
