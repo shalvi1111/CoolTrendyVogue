@@ -27,7 +27,7 @@ const EveryThing =() =>{
             
            
              try {
-              const response = await axios.get(`http://localhost:4000/productDetail/${id}`); 
+              const response = await axios.get(`https://cooltrendyvogue.onrender.com/productDetail/${id}`); 
 
               // // Replace with your server IP if needed
              
@@ -73,7 +73,7 @@ const EveryThing =() =>{
           } 
            console.log(sizeQtyData,"8790")
           try{
-          const resultSize = await axios.post(`http://localhost:4000/sizeqty` , sizeQtyData,{
+          const resultSize = await axios.post(`https://cooltrendyvogue.onrender.com/sizeqty` , sizeQtyData,{
                 headers: { "Content-Type": "application/json" }, // Ensure proper headers
               });
           console.log(resultSize.data.message ,"78");

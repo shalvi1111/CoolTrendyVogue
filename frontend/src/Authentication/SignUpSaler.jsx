@@ -159,8 +159,8 @@ function SignUpSaler() {
       return;
     }
     try {
-      const { data } = await axios.post(
-        "http://localhost:4000/signupUser",
+      const {data}  = await axios.post(
+        "https://cooltrendyvogue.onrender.com/signupUser",
         inputValue,
         { withCredentials: true }
       );
@@ -170,6 +170,7 @@ function SignUpSaler() {
         setTimeout(() => {
           navigate("/");
         }, 1000);
+        // console.log(success);
         setInputValue({
           email: "",
           password: "",
@@ -182,6 +183,7 @@ function SignUpSaler() {
       if (error.response) {
         handleError(error.response.data.message || "Something went wrong");
       } else {
+        console.log(error);
         handleError("Server error. Please try again later.");
       }
     }

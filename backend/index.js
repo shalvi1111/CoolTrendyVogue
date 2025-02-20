@@ -50,12 +50,29 @@ const Stripe = require("stripe");
 
 
 // app.use(cors());
-app.use(
-  cors({
-    // origin: "http://localhost:3000", // Replace with your React app's URL
-    credentials: true,              // Allow credentials (cookies, etc.)
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000", // Replace with your React app's URL
+//     credentials: true,              // Allow credentials (cookies, etc.)
+//   })
+// );
+
+// CORS Configuration
+app.use(cors({
+  // origin: ["local host link", "ur render link"],
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true // Allow cookies and authentication headers
+}));
+
+// Middleware to set CORS headers explicitly
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -534,8 +551,9 @@ if (cart) {
         res.cookie("token", token, {
           withCredentials: true,
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "lax",
+          secure: true,
+          sameSite: "none",
+          maxAge: 24 * 60 * 60 * 1000, 
         });
     
         res.status(201).json({ message: "User signed up successfully", success: true, user });

@@ -9,7 +9,7 @@ function Men() {
     useEffect( ()=>{
         const fetchCateg = async()=>{
             try{
-            const res = await axios.get("http://localhost:4000/getMenCategory");
+            const res = await axios.get("https://cooltrendyvogue.onrender.com/getMenCategory");
             console.log(res.data);
             if(res.data.success){
                 const menProd = res.data.message.filter( (categ)=> categ.category === "Men");

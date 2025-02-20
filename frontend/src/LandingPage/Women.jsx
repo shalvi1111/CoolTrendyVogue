@@ -10,7 +10,7 @@ function Women() {
        useEffect( ()=>{
         const fetchCateg = async()=>{
             try{
-          const res = await axios.get("http://localhost:4000/getWomCategory")
+          const res = await axios.get("https://cooltrendyvogue.onrender.com/getWomCategory")
               
           console.log(res.data.message);
           if (res.data.success && res.data.message && Array.isArray(res.data.message)) {

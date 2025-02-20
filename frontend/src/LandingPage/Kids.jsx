@@ -7,7 +7,7 @@ function Kid() {
     useEffect( ()=>{
         const fetchCtegory = async()=>{
             try{
-                const res = await axios.get("http://localhost:4000/getKidCategory");
+                const res = await axios.get("https://cooltrendyvogue.onrender.com/getKidCategory");
                 console.log(res.data);
                 if(res.data.success){
                     const kidProd = res.data.message.filter( (categ)=> categ.category ==="Kid");
