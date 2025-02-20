@@ -52,7 +52,7 @@ const Stripe = require("stripe");
 // app.use(cors());
 app.use(
   cors({
-    origin: "http://localhost:3000", // Replace with your React app's URL
+    origin: ["http://localhost:3000","https://localhost:3000.com"], // Replace with your React app's URL
     credentials: true,              // Allow credentials (cookies, etc.)
   })
 );
