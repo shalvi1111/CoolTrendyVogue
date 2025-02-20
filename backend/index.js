@@ -50,20 +50,20 @@ const Stripe = require("stripe");
 
 
 // app.use(cors());
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000", // Replace with your React app's URL
-//     credentials: true,              // Allow credentials (cookies, etc.)
-//   })
-// );
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Replace with your React app's URL
+    credentials: true,              // Allow credentials (cookies, etc.)
+  })
+);
 
 // CORS Configuration
-app.use(cors({
-  // origin: ["local host link", "ur render link"],
-  origin: "http://localhost:3000",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true // Allow cookies and authentication headers
-}));
+// app.use(cors({
+//   // origin: ["local host link", "ur render link"],
+//   origin: "http://localhost:3000",
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   credentials: true // Allow cookies and authentication headers
+// }));
 
 // Middleware to set CORS headers explicitly
 app.use((req, res, next) => {
