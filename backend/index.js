@@ -75,12 +75,13 @@ const createSecretToken = (id) => {
 
 
   app.get("/" , async(req,res)=>{
-    res.send("Root path");
+    // res.send("Root path");
+    res.render("/listProduct");
     
   }) ;
 
 
-
+  
   // Route to add a product
 app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS",maxCount:1}, {name:"imageT",maxCount:1} , {name:"imageFourth",maxCount:1}]) , async (req, res) => {
 
