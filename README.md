@@ -13,7 +13,5 @@ CoolTrendyVogue is a modern clothing brand website and app designed to provide u
 - **Frontend:** HTML, CSS, JavaScript, React.js
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
-- **Authentication:** Passport.js
-- **Templating:** EJS
-
-=
+- **Authentication:** 
+- **Templating:** jsx
