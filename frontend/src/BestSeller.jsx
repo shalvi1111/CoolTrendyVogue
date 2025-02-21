@@ -10,11 +10,17 @@ function BestSeller() {
   useEffect(() => {
     const bestProd = async () => {
       try {
+<<<<<<< HEAD
         const res_Prod = await axios.get(
           "https://cooltrendyvogue.onrender.com/bestSeller",
           { withCredentials: true }
         );
 
+=======
+        
+        const res_Prod = await axios.get("http://localhost:4000/bestSeller");
+        console.log(res_Prod.data);
+>>>>>>> 2fb6be762aacb9269b29b4102b51af8bf6ba5280
         if (res_Prod.data.success) {
           const BestSeller = res_Prod.data.message.filter(
             (s) => s.bestSeller === true

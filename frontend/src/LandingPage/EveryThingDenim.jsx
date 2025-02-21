@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+=======
+import axios from 'axios';
+import React ,{useState,useEffect } from 'react';
+import { useParams} from 'react-router-dom';
+>>>>>>> 2fb6be762aacb9269b29b4102b51af8bf6ba5280
 // import Select from "react-select";
 // import { useNavigate } from "react-router-dom";
 
@@ -25,7 +31,20 @@ const EveryThing = () => {
           { withCredentials: true }
         );
 
+<<<<<<< HEAD
         // // Replace with your server IP if needed
+=======
+       
+        //  const [loading, setLoading] = useState(true);
+       
+         // Fetch data from the backend
+         useEffect(() => {
+           const   fetchProducts =  async() =>{
+            
+           
+             try {
+              const response = await axios.get(`http://localhost:4000/productDetail/${id}`); 
+>>>>>>> 2fb6be762aacb9269b29b4102b51af8bf6ba5280
 
         //  console.log(response.data.message ,"Line no 23");
         setProducts(response.data.message);
@@ -48,6 +67,7 @@ const EveryThing = () => {
     // setQty(e)
   };
 
+<<<<<<< HEAD
   const hadleSubmitSQ = async (e) => {
     e.preventDefault();
     // const ndata = new FormData();
@@ -76,6 +96,33 @@ const EveryThing = () => {
       alert("Please select the size again");
     }
   };
+=======
+        const hadleSubmitSQ = async(e)=>{
+          e.preventDefault();
+          // const ndata = new FormData();
+          // ndata.append("qty" , qty);
+          // ndata.append("size",size);
+          const sizeQtyData = {
+            qty:qty,
+            size:size  ,
+            productId:id  
+          } 
+           console.log(sizeQtyData,"8790")
+          try{
+          const resultSize = await axios.post(`http://localhost:4000/sizeqty` , sizeQtyData,{
+                headers: { "Content-Type": "application/json" }, // Ensure proper headers
+              });
+          console.log(resultSize.data.message ,"78");
+          if(resultSize.data.success){
+            alert("Product added successfully ");
+          }
+          // setSize(resultSize.data.message);
+          }
+          catch{
+            alert("Please select the size again")
+          }
+         }
+>>>>>>> 2fb6be762aacb9269b29b4102b51af8bf6ba5280
 
   //  useEffect(() => {
   //   console.log("Current qty:", qty);  // Log qty when it updates

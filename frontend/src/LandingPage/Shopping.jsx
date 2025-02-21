@@ -19,6 +19,7 @@ function Cart() {
 
   useEffect(() => {
     const fetchCartData = async () => {
+<<<<<<< HEAD
       try {
         const result = await axios.get(
           `https://cooltrendyvogue.onrender.com/cart`,
@@ -32,6 +33,12 @@ function Cart() {
           "https://cooltrendyvogue.onrender.com/cart/tp",
           { withCredentials: true }
         );
+=======
+     try{
+        const result = await axios.get(`http://localhost:4000/cart`);
+        const result1 = await axios.get('http://localhost:4000/cart/count');
+        const result2 = await axios.get('http://localhost:4000/cart/tp');
+>>>>>>> 2fb6be762aacb9269b29b4102b51af8bf6ba5280
         console.log(result.data.message);
         setCarts(result.data.message);
         setCarT(result2.data.message);
@@ -48,6 +55,7 @@ function Cart() {
     // const ti = carts.map((cart)=> {cart.title});
     // console.log(ti ,"447");
     try {
+<<<<<<< HEAD
       const response = await axios.delete(
         `https://cooltrendyvogue.onrender.com/cart/delete/${id}`,
         {
@@ -56,6 +64,12 @@ function Cart() {
         { withCredentials: true }
       );
 
+=======
+      const response = await axios.delete(`http://localhost:4000/cart/delete/${id}`, {
+        data: {id},
+      });
+         
+>>>>>>> 2fb6be762aacb9269b29b4102b51af8bf6ba5280
       const data = await response.json();
       if (response.data.success) {
         setRemove(carts.filter((item) => item.id !== id));

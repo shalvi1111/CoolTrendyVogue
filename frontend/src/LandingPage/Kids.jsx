@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 function Kid() {
+<<<<<<< HEAD
   const [category, setCategory] = useState(null);
   const [products, setProducts] = useState([]);
   useEffect(() => {
@@ -11,6 +12,26 @@ function Kid() {
           "https://cooltrendyvogue.onrender.com/getKidCategory",
           { withCredentials: true }
         );
+=======
+    const [category ,setCategory] = useState(null);
+    const [products , setProducts] = useState([]);
+    useEffect( ()=>{
+        const fetchCtegory = async()=>{
+            try{
+                const res = await axios.get("http://localhost:4000/getKidCategory");
+                console.log(res.data);
+                if(res.data.success){
+                    const kidProd = res.data.message.filter( (categ)=> categ.category ==="Kid");
+                    if(kidProd.length > 0){
+                        setCategory("Kid");
+                        setProducts(kidProd);
+                    }
+                    else{
+                        alert("Category doesn't exist");
+                        setCategory(null);
+                    }
+                }
+>>>>>>> 2fb6be762aacb9269b29b4102b51af8bf6ba5280
 
         if (res.data.success) {
           const kidProd = res.data.message.filter(

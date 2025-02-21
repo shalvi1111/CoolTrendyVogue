@@ -14,7 +14,7 @@ import LogOutSaler from './Authentication/LogOutSaler';
 import EveryThing from './LandingPage/EveryThingDenim';
 import Cart from './LandingPage/Shopping';
 import ShowProducts from './ShowProducts';
-import Edit_Product from './Edit';
+
 // import Hero from './LandingPage/Hero';
 import BestSeller from './BestSeller';
 import Order from './LandingPage/Order';
@@ -54,7 +54,7 @@ root.render(
        {/* <Route path='/cart/:id' element={<Cart/>}></Route> */}
        <Route path='/cart' element={<Cart/>}></Route>
       <Route path='/listProduct' element={<ShowProducts />}></Route>
-      <Route path='/editProduct' element={<Edit_Product />}></Route>
+    
       <Route path="/bestSeller" element={<BestSeller />}></Route>
       <Route path='/buy' element={<Order/>}></Route>
       {/* <Route path='/cart/delete' element={<Cart/>}></Route> */}

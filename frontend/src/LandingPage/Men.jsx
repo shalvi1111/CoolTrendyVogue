@@ -5,6 +5,7 @@ function Men() {
   const [category, setCategory] = useState(null);
   const [products, setProducts] = useState([]);
 
+<<<<<<< HEAD
   useEffect(() => {
     const fetchCateg = async () => {
       try {
@@ -24,6 +25,24 @@ function Men() {
             alert("Category doesn't exist!");
             setCategory(null);
           }
+=======
+    useEffect( ()=>{
+        const fetchCateg = async()=>{
+            try{
+            const res = await axios.get("http://localhost:4000/getMenCategory");
+            console.log(res.data);
+            if(res.data.success){
+                const menProd = res.data.message.filter( (categ)=> categ.category === "Men");
+                if(menProd.length >0){
+                setCategory("Men");
+                setProducts(menProd);
+                }
+                else{
+                    alert("Category doesn't exist!");
+                    setCategory(null);
+                }
+            }
+>>>>>>> 2fb6be762aacb9269b29b4102b51af8bf6ba5280
         }
       } catch (err) {
         alert(err.message);

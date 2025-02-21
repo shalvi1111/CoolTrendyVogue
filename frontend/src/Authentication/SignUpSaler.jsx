@@ -36,8 +36,13 @@ function SignUpSaler() {
       return;
     }
     try {
+<<<<<<< HEAD
       const { data } = await axios.post(
         "https://cooltrendyvogue.onrender.com/signupUser",
+=======
+      const {data}  = await axios.post(
+        "http://localhost:4000/signupUser",
+>>>>>>> 2fb6be762aacb9269b29b4102b51af8bf6ba5280
         inputValue,
         { withCredentials: true }
       );

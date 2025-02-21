@@ -31,8 +31,15 @@ const SalerFormLogin = () => {
 
     try {
       const { data } = await axios.post(
+<<<<<<< HEAD
         "https://cooltrendyvogue.onrender.com/userLogin",
         inputValue,
+=======
+        "http://localhost:4000/userLogin",
+        {
+          ...inputValue,
+        },
+>>>>>>> 2fb6be762aacb9269b29b4102b51af8bf6ba5280
         { withCredentials: true }
       );
 

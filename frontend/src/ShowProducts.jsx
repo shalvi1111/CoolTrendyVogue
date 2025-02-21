@@ -10,7 +10,7 @@ const ListProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("https://cooltrendyvogue.onrender.com/listProduct");
+        const response = await axios.get("http://localhost:4000/listProduct");
         if (response.data.success) {
           setProducts(response.data.message);
         } else {

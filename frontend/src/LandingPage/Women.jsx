@@ -3,8 +3,37 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 function Women() {
+<<<<<<< HEAD
   const [category, setCategory] = useState(null);
   const [products, setProducts] = useState("Women");
+=======
+    
+    const [ category , setCategory] = useState(null);
+    const [products, setProducts] = useState("Women");
+     
+       useEffect( ()=>{
+        const fetchCateg = async()=>{
+            try{
+          const res = await axios.get("http://localhost:4000/getWomCategory")
+              
+          console.log(res.data.message);
+          if (res.data.success && res.data.message && Array.isArray(res.data.message)) {
+            // if you need to filter by category (if the API returns multiple categories)
+            const womenProd = res.data.message.filter(prod => prod.category === "Women");
+            if (womenProd.length > 0) {
+              setCategory("Women");
+              setProducts(womenProd);
+            } 
+          }
+          else{
+            alert("Category doesn't exist!");
+            setCategory(null);
+          }
+        }catch(err){
+            alert(err.message);
+            setCategory(null);
+        }
+>>>>>>> 2fb6be762aacb9269b29b4102b51af8bf6ba5280
 
   useEffect(() => {
     const fetchCateg = async () => {
