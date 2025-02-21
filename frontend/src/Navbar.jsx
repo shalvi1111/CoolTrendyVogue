@@ -10,7 +10,7 @@ function Navbar() {
    useEffect ( ()=>{
        const countdata = async()=>{
          try {
-          const result = await axios.get("https://cooltrendyvogue.onrender.com/cart/count");
+          const result = await axios.get("http://localhost:4000/cart/count");
           // console.log(result.data.message)
              setCount(result.data.message)
             }

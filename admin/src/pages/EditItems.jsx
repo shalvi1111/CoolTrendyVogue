@@ -84,7 +84,7 @@ function EditItems() {
               <input
                 type="text"
                 name="title"
-                className="form-control is-valid"
+                className="form-control "
                 value={product.title}
                 onChange={handleChange}
                 required
@@ -99,7 +99,7 @@ function EditItems() {
               <input
                 type="text"
                 name="category"
-                className="form-control is-valid"
+                className="form-control "
                 value={product.category}
                 onChange={handleChange}
                 required
@@ -113,7 +113,7 @@ function EditItems() {
               </label>
               <textarea
                 name="description"
-                className="form-control is-valid"
+                className="form-control "
                 value={product.description}
                 onChange={handleChange}
                 required
@@ -128,7 +128,7 @@ function EditItems() {
               <input
                 type="number"
                 name="price"
-                className="form-control is-valid"
+                className="form-control "
                 value={product.price}
                 onChange={handleChange}
                 required

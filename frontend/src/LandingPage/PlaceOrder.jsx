@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect ,useState } from 'react';
 function PlaceOrder() {
 
@@ -22,9 +22,9 @@ function PlaceOrder() {
         const fetchCartData = async () => {
 
           try {
-              const result = await axios.get(`https://cooltrendyvogue.onrender.com/cart`);
-            const result1 = await axios.get('https://cooltrendyvogue.onrender.com/cart/count');
-                    const result2 = await axios.get('https://cooltrendyvogue.onrender.com/cart/tp');
+              const result = await axios.get(`http://localhost:4000/cart`);
+            const result1 = await axios.get('http://localhost:4000/cart/count');
+                    const result2 = await axios.get('http://localhost:4000/cart/tp');
                     // const placeorder = await axios.post("http://localhost:4000/placeorder");
                     // console.log(placeorder.data);
                     setCarT(result2.data.message);
@@ -58,7 +58,7 @@ function PlaceOrder() {
                     address,
                   };
             
-                  const placeorder = await axios.post('https://cooltrendyvogue.onrender.com/placeorder', orderData);
+                  const placeorder = await axios.post('http://localhost:4000/placeorder', orderData);
                   console.log(placeorder.data);
                   if(placeorder.data.success){
                     navigate('/paymentSuccessful'); 

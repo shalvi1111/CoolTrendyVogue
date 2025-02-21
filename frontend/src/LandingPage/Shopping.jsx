@@ -25,9 +25,9 @@ function Cart() {
   useEffect(() => {
     const fetchCartData = async () => {
      try{
-        const result = await axios.get(`https://cooltrendyvogue.onrender.com/cart`);
-        const result1 = await axios.get('https://cooltrendyvogue.onrender.com/cart/count');
-        const result2 = await axios.get('https://cooltrendyvogue.onrender.com/cart/tp');
+        const result = await axios.get(`http://localhost:4000/cart`);
+        const result1 = await axios.get('http://localhost:4000/cart/count');
+        const result2 = await axios.get('http://localhost:4000/cart/tp');
         console.log(result.data.message);
         setCarts(result.data.message);
         setCarT(result2.data.message);
@@ -57,7 +57,7 @@ fetchCartData();
     // const ti = carts.map((cart)=> {cart.title});
     // console.log(ti ,"447");
     try {
-      const response = await axios.delete(`https://cooltrendyvogue.onrender.com/cart/delete/${id}`, {
+      const response = await axios.delete(`http://localhost:4000/cart/delete/${id}`, {
         data: {id},
       });
          

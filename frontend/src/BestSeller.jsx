@@ -12,7 +12,7 @@ function BestSeller() {
     const bestProd = async () => {
       try {
         
-        const res_Prod = await axios.get("https://cooltrendyvogue.onrender.com/bestSeller");
+        const res_Prod = await axios.get("http://localhost:4000/bestSeller");
         console.log(res_Prod.data);
         if (res_Prod.data.success) {
           const BestSeller = res_Prod.data.message.filter( (s)=> s.bestSeller === true );

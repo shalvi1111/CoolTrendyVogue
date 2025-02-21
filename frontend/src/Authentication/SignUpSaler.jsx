@@ -160,7 +160,7 @@ function SignUpSaler() {
     }
     try {
       const {data}  = await axios.post(
-        "https://cooltrendyvogue.onrender.com/signupUser",
+        "http://localhost:4000/signupUser",
         inputValue,
         { withCredentials: true }
       );
