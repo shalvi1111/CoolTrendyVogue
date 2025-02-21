@@ -52,7 +52,7 @@ const Stripe = require("stripe");
 // app.use(cors());
 app.use(
   cors({
-    origin: ["http://localhost:3000","https://localhost:3000.com"], // Replace with your React app's URL
+    origin: ["http://localhost:3000","http://localhost:3001"], // Replace with your React app's URL
     credentials: true,              // Allow credentials (cookies, etc.)
   })
 );
@@ -91,9 +91,9 @@ const createSecretToken = (id) => {
 
 
 
-  app.get("*" , async(req,res)=>{
-    // res.send("Root path");
-    res.render("/listProduct");
+  app.get("/" , async(req,res)=>{
+    res.send("Backend uploaded");
+    // res.render("/listProduct");
     
   }) ;
 
