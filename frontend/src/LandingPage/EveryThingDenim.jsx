@@ -1,13 +1,6 @@
 import axios from 'axios';
 import React ,{useState,useEffect } from 'react';
 import { useParams} from 'react-router-dom';
-// import Select from "react-select";
-// import { useNavigate } from "react-router-dom";
-
-// import ShowProducts from '../ShowProducts';
-// import { useParams } from 'react-router-dom';
-
-
 
 const EveryThing =() =>{
 
@@ -21,7 +14,7 @@ const EveryThing =() =>{
        
         //  const [loading, setLoading] = useState(true);
        
-         // Fetch data from the backend
+         //  data from  backend
          useEffect(() => {
            const   fetchProducts =  async() =>{
             
@@ -29,8 +22,6 @@ const EveryThing =() =>{
              try {
               const response = await axios.get(`http://localhost:4000/productDetail/${id}`); 
 
-              // // Replace with your server IP if needed
-             
               //  console.log(response.data.message ,"Line no 23"); 
               setProducts(response.data.message);
               //  setLoading(false);
@@ -49,10 +40,7 @@ const EveryThing =() =>{
         //  if (loading) return <div>Loading...</div>;
 
          const hadleChangeSQ = (e  )=>{
-          // console.log(e , "52");
-        
-          
-           
+      
               setSize(e);
               // setQty(e)
           
@@ -74,7 +62,7 @@ const EveryThing =() =>{
            console.log(sizeQtyData,"8790")
           try{
           const resultSize = await axios.post(`http://localhost:4000/sizeqty` , sizeQtyData,{
-                headers: { "Content-Type": "application/json" }, // Ensure proper headers
+                headers: { "Content-Type": "application/json" }, 
               });
           console.log(resultSize.data.message ,"78");
           if(resultSize.data.success){
@@ -87,40 +75,7 @@ const EveryThing =() =>{
           }
          }
 
-
-        //  useEffect(() => {
-        //   console.log("Current qty:", qty);  // Log qty when it updates
-        // }, [qty]);
-//         const handleSubmitCart = async(event)=>{
-//             event.preventDefault() ;
-// //  image , title, price , qty , sizes ,
-//             const ShoppingData = {
-//               image : products.image[0],
-//               title: products.title,
-//               // qty : products.qty ,
-//               price : products.price ,
-//               // sizes : products.sizes
-//             }
-
-//             try{
-//               const result = await axios.post(`http://localhost:4000/cart` ,ShoppingData, {
-//                 headers: { "Content-Type": "application/json" }, // Ensure proper headers
-//               });
-//                   console.log(result.data.message);
-//               if(result.data.success){
-//                 alert("Product added in cart successfully!")
-                
-//               }
-//               else{
-//                 alert(result.data);
-//               }
-            
-//             }
-//             catch(err){
-//             //  alert(err);
-//               alert("Please try again to add a product in cart");
-//             }
-//         }
+       
          if (!products) return <div>Product not found!</div>;
       
        
@@ -168,12 +123,6 @@ const EveryThing =() =>{
                         <button onClick={()=>hadleChangeSQ("XXL" )} class="btn btn-outline-secondary">XXL</button>
                         <input type='number' onChange={(e)=>setQty(Number(e.target.value))} placeholder='Enter Quantity' value={qty} style={{width:"50px" , marginLeft:"16px"}} required />
           
-                       {/* <Select defaultValue={size} options={sizeOption} placeholder="Select size" isMulti noOptionsMessage={()=>"No size found"}/> */}
-                        {/* {Array.isArray(products.sizes)?products.sizes.map((size , idx)=>(
-                           <button type="button" class="btn btn-outline-secondary" key={idx}>{size}</button>
-                        )) : "No prod avlbl"} */}
-                        {/* <input type='text' placeholder='Enter size' value={}/> */}
-              
                      </div>
 
                      <form onSubmit={hadleSubmitSQ} className='needs-validation' novalidate>
@@ -186,24 +135,6 @@ const EveryThing =() =>{
 
                         </div>
 
-                       
-                          {/* <div className="row mt-4" > */}
-                         
-                             {/* <div className="col-6 "> */}
-                             {/* <form onSubmit={handleSubmitCart}> */}
-                                {/* <button className='btn btn-dark ' style={{width:"80%" }} type='submit'> */}
-                            {/* <Link to={`/cart`} style={{textDecoration:"none" , color:"white"}} >Add to shopping bag</Link></button> */}
-                           {/* Add to shopping bag </button> */}
-                           {/* </form> */}
-                           {/* </div> */}
-                           {/* <div className="col-6 ">
-                            <button className='btn btn-dark' ><Link to="/cart" style={{textDecoration:"none" , color:"white"}} >Buy Now</Link></button>
-                           </div> */}
-                          
-
-
-                           {/* </div> */}
-                        
 
                         <div className="social-media mb-5 ">
                         <i className="fa fa-facebook-square m-2 fs-4" aria-hidden="true"></i>
@@ -245,52 +176,3 @@ const EveryThing =() =>{
 
 export default EveryThing;
 
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-
-// function ProductDetail() {
-//   const [product, setProduct] = useState(null);
-//   const [error, setError] = useState(null);
-//   const { id } = useParams(); // gets the 'id' from URL params
-
-//   useEffect(() => {
-//     async function fetchProduct() {
-//       try {
-//         let response = await fetch(`http://localhost:4000/productDetail/${id}`);
-//         let result = await response.json();
-
-//         if (result.success) {
-//           setProduct(result.message);
-//         } else {
-//           setError(result.message);
-//         }
-//       } catch (err) {
-//         setError(err.message);
-//       }
-//     }
-
-//     fetchProduct();
-//   }, [id]);
-
-//   // if (error) {
-//   //   return <div style={{ color: 'red' }}>{error}</div>;
-//   // }
-
-//   return (
-//     <div style={{ padding: '20px' }}>
-//       <h1>Product Details</h1>
-//       {product ? (
-//         <div className="product-item" style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-//           <h2>{product.name}</h2>
-//           <p>{product.description}</p>
-//           <p>Price: {product.price}</p>
-//           {/* Add more fields as needed */}
-//         </div>
-//       ) : (
-//         <p>Loading product details...</p>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default ProductDetail;

@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import LoginAdmin from './pages/Login';
-// import AddItems from './pages/AddItems';
+
 
 import Navbar from "./Navbar";
-// import Siderbar from "./Sidebar";
 import { ToastContainer } from 'react-toastify';
 import ListItems from './pages/ListItems';
-// import OrderItem from './pages/OrderItems';
 import AddProduct from './pages/AddProduct';
-// import { useState } from 'react';
 import { Routes , Route } from 'react-router-dom';
 import Cart from './pages/Cart';
 import DetailProd from './pages/ProductDetail';
@@ -16,7 +13,7 @@ import Home from './pages/HomePage';
 import EditItems from './pages/EditItems';
 
 
-// export const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 
 const App =() =>{
 

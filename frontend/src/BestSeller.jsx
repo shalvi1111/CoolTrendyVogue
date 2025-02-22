@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 function BestSeller() {
   const [products, setProducts] = useState([]);
   const [bestSeller , setBestSeller] = useState(false);
-  // const [loading, setLoading] = useState(true);
+  
  
 
   useEffect(() => {
@@ -35,8 +35,7 @@ function BestSeller() {
     bestProd();
   }, []);
 
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error}</p>;
+
 
    return (
   <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", padding: "20px" }}>

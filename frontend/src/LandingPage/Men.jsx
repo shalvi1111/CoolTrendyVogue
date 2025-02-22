@@ -48,11 +48,11 @@ function Men() {
                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                }}
              >
-               {/* Display the first image or a placeholder */}
+          
                {product.image && product.image.length > 0 ? (
                  <img
                    className="object-fit"
-                   src={product.image[0]} // Assuming the first image is displayed
+                   src={product.image[0]} //  image is displayed
                    alt={product.title}
                    style={{ width: "100%", height: "400px", objectFit: "contain", borderRadius: "8px"    }}
                  />

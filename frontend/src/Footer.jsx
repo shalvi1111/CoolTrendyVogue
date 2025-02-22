@@ -1,12 +1,12 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+
 
 function Footer() {
     return ( 
        <>
         
       
-        {/* <div class="row "  style={{backgroundColor:"#EEEDEB" , width:"100%"}}> */}
+       
           <footer className='mt-5 ' style={{backgroundColor:"#EEEDEB" , width:"100%" }}>
             <div className="container sticky-bottom row ">
         <div class="col-12  mt-5 mx-4 "  style={{display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>

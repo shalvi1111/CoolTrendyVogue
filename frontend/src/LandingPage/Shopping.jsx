@@ -9,15 +9,10 @@ function Cart() {
   
 
   //  console.log(id);
-  // const prodid = carts.map( (cart)=>cart._id)
-  // console.log(prodid);
   const [carts, setCarts] = useState([]);
   const [count, setCount] = useState(0);
-  // const [sizes, setSizes] = useState([]);
-  // const [qty , setQty] = useState(0);
   const [cartT, setCarT] = useState(0);
   const [remove, setRemove] = useState(null);
-  // const [sizeQtyDetails, setSizeQtyDetails] = useState({});
 
 
 

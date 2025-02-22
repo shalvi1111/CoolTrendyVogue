@@ -51,9 +51,9 @@ function PlaceOrder() {
                    console.log(userId);
           
                   const orderData = {
-                    userId, // Use appropriate userId if available
-                    items: [], // Add items from cart if necessary
-                    paymentMode, // Based on selected payment method
+                    userId, // Use  userId 
+                    items: [], // Adding items from cart 
+                    paymentMode, //  select payment method
                     price: cartT,
                     address,
                   };
@@ -108,17 +108,7 @@ return(
           <input type="text" className="form-control" name="address" value={address} onChange={(e) => setAddress(e.target.value)} style={{ height: '40px', width: '380px' }} />
         </div>
 
-        {/* <div className="row">
-          <div className="input-group col-12 mb-3">
-            <input type="text" className="form-control" placeholder="CITY" />
-            <input type="text" className="form-control" placeholder="STATE" />
-          </div>
-
-          <div className="input-group col-12 mb-3">
-            <input type="number" className="form-control" placeholder="PINCODE" />
-            <input type="text" className="form-control" placeholder="COUNTRY" />
-          </div>
-        </div> */}
+    
 
         <div className="mb-3 mt-3 d-flex">
           <label htmlFor="phone" className="form-label me-4" style={{ alignSelf: 'center' }}><b>PHONE NUMBER:</b></label>
@@ -157,19 +147,7 @@ return(
                       </label>
                     </div>
 
-                    {/* <div className="form-check">
-                      <input className="form-check-input" type="radio" name="paymentMethod" value="stripe" checked={paymentMode === 'stripe'} onChange={(e) => setPaymentMode(e.target.value)} />
-                      <label className="form-check-label" htmlFor="paymentMethod">
-                        <img src="../font-awesome/images/stripe.png" alt="stripe" style={{ height: '100px', width: '100px' }} className="m-2" />
-                      </label>
-                    </div>
-
-                    <div className="form-check">
-                      <input className="form-check-input" type="radio" name="paymentMethod" value="razorpay" checked={paymentMode === 'razorpay'} onChange={(e) => setPaymentMode(e.target.value)} />
-                      <label className="form-check-label" htmlFor="paymentMethod">
-                        <img src="../font-awesome/images/razorpay-icon.webp" alt="razorpay" style={{ height: '100px', width: '100px' }} className="m-2" />
-                      </label>
-                    </div> */}
+        
                   </div>
                   <div className="col-12">
                     <button className="btn btn-dark text-center" type="submit">PLACE ORDER</button>

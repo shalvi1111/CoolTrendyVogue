@@ -11,12 +11,9 @@ function DetailProd() {
          
     const [products, setProducts] = useState(null);
     const [delProd , setDelProd] = useState('');
-   //  const [qty,setQty] = useState();
-
   
-   //  const [loading, setLoading] = useState(true);
   
-    // Fetch data from the backend
+    //  data from the backend
     useEffect(() => {
       const   fetchProducts =  async() =>{
        
@@ -25,7 +22,7 @@ function DetailProd() {
          const response = await axios.get(`http://localhost:4000/productDetail/${id}`); 
          
 
-         // // Replace with your server IP if needed
+    
         
          //  console.log(response.data.message ,"Line no 23"); 
          setProducts(response.data.message);

@@ -8,7 +8,6 @@ function Navbar({setToken}) {
         <nav className="navbar navbar-expand-lg bg-body-white border-bottom sticky-top " style={{backgroundColor:"#EEEDEB" , width:"100%" , display:"flex", margin:"0" , padding:"0"}} >
   
         <div className="container-fluid ms-5 mx-5">
-         {/* <Link className="navbar-brand" to="/" style={{ flexGrow: 1 }}> */}
          <h4 className='fs-1 ' style={{fontWeight:"bolder"}}> <i><Link to="/"  style={{textDecoration:"none" , color:"black"}}>Admin Panel </Link>  </i>     </h4>
           <div className="collapse navbar-collapse" id="navbarNavDropdown">
                    <ul className="navbar-nav   text-center">
@@ -34,18 +33,8 @@ function Navbar({setToken}) {
                      </ul>
                      </div>
          <button className='btn btn-dark' onClick={()=>setToken("")}>Log Out</button>
-           {/* </Link> */}
            </div>
    </nav>
-
-//   <nav class="navbar bg-body-tertiary">
-//   <div class="container-fluid">
-//     <span class="navbar-brand mb-0 h1">Navbar</span>
-//   </div>
-// </nav>
-
-
-
 
 
     );

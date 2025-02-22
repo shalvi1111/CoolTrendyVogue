@@ -52,8 +52,8 @@ const Stripe = require("stripe");
 // app.use(cors());
 app.use(
   cors({
-    origin: ["http://localhost:3000","http://localhost:3001"], // Replace with your React app's URL
-    credentials: true,              // Allow credentials (cookies, etc.)
+    origin: ["http://localhost:3000","http://localhost:3001"], //  React app URL
+    credentials: true,              //  credentials 
   })
 );
 
@@ -65,14 +65,6 @@ app.use(
 //   credentials: true // Allow cookies and authentication headers
 // }));
 
-// Middleware to set CORS headers explicitly
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", req.headers.origin);
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   next();
-// });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -183,9 +175,7 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
           // console.log("error, Product doesn't exist");
          return res.redirect("/listProduct");
         }
-          // Object.assign(product,req.body);
-          // await product.save();
-         
+          
 
       res.json({success:true,message: product});
     }
@@ -236,7 +226,7 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
       // console.log(productId);
       const {size ,qty , productId  } = req.body;
       // if(!productId || !size || !qty){
-      //   res.json({success:false , message:"All fields are required to fill"});
+      //   res.json({success:false , message:" fields are required "});
       // }
       const product =  await ProductModel.findById( productId);
       const existingSize = product.sizes.find( (s)=> s.size === size);
@@ -281,7 +271,7 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
     try{
      const {id} = req.params;
     //  console.log(productId);
-    //  const objectId = new mongoose.Types.ObjectId(productId);
+   
      const getSizes = await CartModel.findById(id).select("sizes");
      
      res.json({success:true, message:getSizes});
@@ -323,20 +313,6 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
   })
 
 
-    
-
-   
-
-    
-
-    //  All order for admin panel 
-
-
-
-    // Shopping data for frontend
-
-
-    
 
   // Product's added in cart
   app.post("/cart" , async(req,res)=>{
@@ -443,19 +419,13 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
       const cart = await CartModel.findById( userId ); // Find by correct userId
       // console.log(cart ,"47893");
 if (cart) {
-    const deletedCart = await CartModel.deleteMany( {} ); // Delete all cart items
+    const deletedCart = await CartModel.deleteMany( {} ); // Delete cart
     // console.log(`Deleted ${deletedCart.deletedCount} cart items for UserId: ${userId}`);
 } else {
     console.log("No cart found for UserId:", userId);
 }
 
-
-      
-  
-      
-
-  
-      // Respond with success message
+      //  success 
       res.json({
         success: true,
         message: "Order placed successfully",
@@ -524,14 +494,8 @@ if (cart) {
     })
 
  
-
   
-
-
-
-// removing product
-  
-    // Authentication
+    // Signup login 
     app.post("/signupUser", async (req, res) => {
       try {
         const { email, password, username, createdAt } = req.body;
@@ -630,10 +594,7 @@ if (cart) {
         }
       })
 
-    // app.get("/logoutSaler" , async(req,res)=>{
-    //   res.send("logout                 ...............")
-    // })
-  
+    
     
 
 

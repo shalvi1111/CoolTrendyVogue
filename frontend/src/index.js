@@ -15,7 +15,6 @@ import EveryThing from './LandingPage/EveryThingDenim';
 import Cart from './LandingPage/Shopping';
 import ShowProducts from './ShowProducts';
 
-// import Hero from './LandingPage/Hero';
 import BestSeller from './BestSeller';
 import Order from './LandingPage/Order';
 
@@ -32,7 +31,7 @@ import NotFound from './LandingPage/NotFound';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-// const login = window.localStorage.getItem("isLoggedIn");
+
 root.render(
    
    <BrowserRouter>
@@ -65,7 +64,6 @@ root.render(
       <Route path='/contact' element ={<Contact />} ></Route>
       <Route path='/placeorder' element={<PlaceOrder />} ></Route>
       <Route path='/paymentSuccessful' element ={<PaymentSuccessful />} ></Route>
-      {/* <Route path='/paymentNotsuccessful' element ={<PaymentNotSuccessful />} ></Route> */}
       <Route path='/paymentUnsuceessful'  element = {<PaymentUnsuccessful />} ></Route>
       <Route path='*' element = {<NotFound />}></Route>
     

@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer , toast } from "react-toastify";
-// import { backendURL } from "../App";
-// import useNavigate from 'react-use-navigate';
 const LoginAdmin = ({setToken}) => {
 
 
