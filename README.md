@@ -8,6 +8,7 @@ CoolTrendyVogue is a modern clothing brand website and app designed to provide u
 - Shopping cart functionality
 - Secure checkout process
 - Admin panel for product management
+- There are two modes for payment one is for COD (Cash on Delivery) and other is Stripe payment method
 
 ##  Tech Work
 - **Frontend:** HTML, CSS, JavaScript, React.js

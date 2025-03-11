@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useEffect ,useState } from 'react';
+import {loadStripe} from '@stripe/stripe-js';
+
 function PlaceOrder() {
 
     //  const id = useParams();
@@ -16,6 +18,10 @@ function PlaceOrder() {
      const [paymentMode, setPaymentMode] = useState('');
      const [carts , setCarts] = useState([]);
     //  console.log(count._id);
+
+      // const makePaymet = async()=>{
+      //  const stripemode =  loadStripe("pk_test_51Qu6p2Da5qoFPANqhNcF8Qb5E2yf3bkmkEoimwY4pBaJfK4tuoK2TYuJHVxR5Wg2OTaNDfdf2UQhQ3oJ8UoRAPxF005Uo4S9w5")
+      // }
        
 
      useEffect(() => {
@@ -52,21 +58,52 @@ function PlaceOrder() {
           
                   const orderData = {
                     userId, // Use  userId 
-                    items: [], // Adding items from cart 
+                    items: carts.map((cart) => ({
+                      name: cart.name,               // Use product name
+                      price: cart.price,             // Use product price
+                      quantity: count,      // Use product quantity
+                    })),// Adding items from cart 
                     paymentMode, //  select payment method
                     price: cartT,
                     address,
                   };
             
-                  const placeorder = await axios.post('http://localhost:4000/placeorder', orderData);
-                  console.log(placeorder.data);
-                  if(placeorder.data.success){
-                    navigate('/paymentSuccessful'); 
+                  // const placeorder = await axios.post('http://localhost:4000/placeorder', orderData);
+                  // console.log(placeorder.data);
+                  if (paymentMode === 'COD') {
+                    const response = await axios.post('http://localhost:4000/codMode', orderData);
+                    console.log(response.data.success ,"71");
+                    response.data.success ? navigate('/paymentSuccessful') : navigate('/paymentUnsuccessful');
+                  } else if (paymentMode === 'Stripe') {
+                    // const stripe = await stripemode;
+                    // const { data } = await axios.post('http://localhost:4000/stripeMode', orderData);
+                    
+                    // const result = await stripe.redirectToCheckout({ sessionId: data.sessionId });
+
+                    // if (result.error) alert(result.error.message);
+                    const stripe = await loadStripe("pk_test_51Qu6p2Da5qoFPANqhNcF8Qb5E2yf3bkmkEoimwY4pBaJfK4tuoK2TYuJHVxR5Wg2OTaNDfdf2UQhQ3oJ8UoRAPxF005Uo4S9w5");
+
+  const { data } = await axios.post('http://localhost:4000/stripeMode', orderData, {
+    withCredentials: true,
+  });
+  console.log(data,"DATA");
+  //  console.log(data.success,"djhfdj",data.sessionId);
+  if (data.success && data.sessionId) {
+    const result = await stripe.redirectToCheckout({ sessionId: data.sessionId });
+    
+    if (result.error) {
+      alert(result.error.message);
+    }
+    }
+
                   }
-                  else{
-                     navigate("/paymentUnsuceessful");
-                    // alert("Please, try again to make a payment successfull!")
-                  }
+                  // if(placeorder.data.success){
+                  //   navigate('/paymentSuccessful'); 
+                  // }
+                  // else{
+                  //    navigate("/paymentUnsuceessful");
+                  //   // alert("Please, try again to make a payment successfull!")
+                  // }
 
                 
 
@@ -141,9 +178,17 @@ return(
                 <div className="row ">
                   <div className="col-4 d-flex">
                     <div className="form-check ">
-                      <input className="form-check-input" type="radio" name="paymentMethod" value="cod" checked={paymentMode === 'COD'} onChange={(e) => setPaymentMode(e.target.value)} />
-                      <label className="form-check-label " htmlFor="cod">  <strong>Cash on Delivery</strong>
+                      <input className="form-check-input" type="radio" name="paymentMethod" value="COD" checked={paymentMode === 'COD'} onChange={(e) => setPaymentMode(e.target.value)} />
+                      <label className="form-check-label " htmlFor="COD">  <strong>Cash on Delivery</strong>
                         <img src="../font-awesome/images/cash-on-delivery.png" alt="COD" style={{ height: '100px', width: '100px' }} className="m-2 " />
+                      </label>
+                    </div>
+
+                    {/* <div className="col-4 d-flex"> */}
+                    <div className="form-check mx-5 text-end ">
+                      <input className="form-check-input" type="radio" name="paymentMethod" value="Stripe" checked={paymentMode === 'Stripe'} onChange={(e) => setPaymentMode(e.target.value)} />
+                      <label className="form-check-label " htmlFor="Stripe">  
+                        <img src="../font-awesome/images/stripe.png" alt="stripe" style={{ height: '100px', width: '100px' }} className="m-2 " />
                       </label>
                     </div>
 

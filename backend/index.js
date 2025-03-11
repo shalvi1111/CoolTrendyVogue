@@ -40,12 +40,10 @@ const productSchema = require("./Schemas/ProductSchema.jsx");
 const OrderModel = require("./models/OderModel.jsx");
 const CartModel = require("./models/CartModel.jsx");
 
-const Stripe = require("stripe");
 
 
-
-
-   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  // const {origin} = window.location;
+   const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 
 
@@ -117,7 +115,7 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
         return result1.secure_url
       })
      )
-
+  
     
      
         const newPrdouct = new ProductModel({
@@ -393,11 +391,11 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
   });
 
   // Placing order by Cash on delivery
-  app.post("/placeorder" , async(req,res)=>{
+  app.post("/codMode" , async(req,res)=>{
     try {
       const { userId, items, paymentMode, price, address } = req.body;
   
-      // Validate required fields
+      //  required fields
       if (!userId || !items || !paymentMode || !price || !address) {
         return res.status(400).json({ success: false, error: "Missing required fields" });
       }
@@ -406,7 +404,7 @@ app.post("/addProduct" ,upload.fields([{name:"imageF",maxCount:1},{name:"imageS"
       const newOrder = new OrderModel({
         userId,
         items,
-        paymentMode:"COD",
+        paymentMode,
         payment:true,
         price,
         address,
@@ -451,39 +449,53 @@ if (cart) {
   
 
   // PLaceing order by Stripe 
-  app.post("/placeorder/stripe" , async(req,res)=>{
+  app.post("/stripeMode" , async(req,res)=>{
     try{
       
       const {userId,items,  paymentMode, price, address, } = req.body;
-      const {origin} = req.headers;
+      const {origin} = req.header;
       const orderData = {
      
         userId,
         items,
-        paymentMode:"Stripe",
+        paymentMode,
         payment:false,
         price,
         address,
         date: Date.now(), // Set current timestamp
       };
-
+       
       const newOrder = new OrderModel(orderData);
     const orderPlaced=  await newOrder.save();
     //   Stripe  Session
     const line_items = items.map((item)=>({
       price_data:{
-        currency:"ruppee",
+        currency:"inr",
         product_data:{
           name:item.name
         } ,
-        unit_amount:item.price*100
+        unit_amount:Math.round(item.price*100)
       } ,
       quantity:item.quantity
     }))
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      success_url: `${origin}/order-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/order-cancelled`,
+      line_items: items.map((item) => ({
+        price_data: {
+          currency: 'inr',
+          product_data: {
+            name: item.name || 'Unnamed Product',
+          },
+          unit_amount: item.price * 100, // Convert price to smallest currency unit
+        },
+        quantity: item.quantity || 1,
+      })),
+
+
+      payment_method_types:["card"],
+      success_url:"http://localhost:3000/paymentSuccessful",
+      cancel_url: "http://localhost:3000/paymentUnsuceessful",
+    
     })
   
     res.json({success:true,sessionId:session.id});
@@ -491,6 +503,8 @@ if (cart) {
     catch(err){
      res.json({success:false,message:err.message})
     }
+
+
     })
 
  
